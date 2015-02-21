@@ -39,54 +39,110 @@
         return;
       }
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self saveNumberPushups:20 crunches:50 leftPlankTime:60 rightPlankTime:18];
+        [self saveleftPlankTime:60 rightPlankTime:18];
+//        [self savePushupTime:30];
+//        [self saveCrunchesTime:40];
         // self update info from healthkit.
       });
     }];
   }
 //
-//  [self logWorkoutWithDuration:67];
-  
   
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)logWorkoutWithDuration:(NSTimeInterval)interval {
-  NSMutableArray *samples;
-  HKQuantity *energy = [HKQuantity quantityWithUnit:[HKUnit kilocalorieUnit] doubleValue:interval*3];
+- (void)saveCrunchesTime:(double)time {
+  HKUnit *cal = [HKUnit kilocalorieUnit];
+  
+  float calsPerHour = 408; // for planks, found info based on 150lbs
+  float calsPerSecond = calsPerHour/360.0;
+  
+  HKQuantity *crunchesEnergy = [HKQuantity quantityWithUnit:cal doubleValue:time*calsPerSecond];
+  HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+  HKQuantitySample *pushups = [HKQuantitySample quantitySampleWithType:type
+                                                              quantity:crunchesEnergy
+                                                             startDate:[NSDate date]
+                                                               endDate:[NSDate date]
+                                                              metadata:nil];
+  
+  NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:pushups, nil];
   HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
                                                 startDate:[NSDate date]
                                                   endDate:[NSDate date]
-                                                 duration:interval
-                                        totalEnergyBurned:energy
+                                                 duration:time
+                                        totalEnergyBurned:nil
                                             totalDistance:nil
                                                  metadata:nil];
-  [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
-    
-  }];
+  
   
   [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
-       if (!success) {
+    if (!success) {
       NSLog(@"An error occured saving the data");
-         abort();
-       }
-     UIAlertView *savealert=[[UIAlertView alloc]initWithTitle:@"SmartMat" message:@"Values has been saved to HealthKit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      abort();
+    }
+    
+    [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"An error occured adding sample to workout");
+        NSLog(@"%@", error.description);
+        abort();
+      }
+      NSLog(@"Added samples to workout");
+    }];
+    
     NSLog(@"Saved the data");
-       [savealert show];
   }];
 }
 
-- (void)saveNumberPushups:(double)pushups crunches:(double)crunches leftPlankTime:(double)leftTime rightPlankTime:(double)rightTime {
-//  HKUnit *repUnit = [HKUnit countUnit];
-//  HKUnit *plankTime = [HKUnit secondUnit];
+
+- (void)savePushupTime:(double)time {
+    HKUnit *cal = [HKUnit kilocalorieUnit];
+
+    float calsPerHour = 408; // for planks, found info based on 150lbs
+    float calsPerSecond = calsPerHour/360.0;
+    
+    HKQuantity *pushupEnergy = [HKQuantity quantityWithUnit:cal doubleValue:time*calsPerSecond];
+    HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+    HKQuantitySample *pushups = [HKQuantitySample quantitySampleWithType:type
+                                                                  quantity:pushupEnergy
+                                                                 startDate:[NSDate date]
+                                                                   endDate:[NSDate date]
+                                                                  metadata:nil];
+  
+    NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:pushups, nil];
+    HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
+                                                  startDate:[NSDate date]
+                                                    endDate:[NSDate date]
+                                                   duration:time
+                                          totalEnergyBurned:nil
+                                              totalDistance:nil
+                                                   metadata:nil];
+    
+    
+    [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"An error occured saving the data");
+        abort();
+      }
+      
+      [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
+        if (!success) {
+          NSLog(@"An error occured adding sample to workout");
+          NSLog(@"%@", error.description);
+          abort();
+        }
+        NSLog(@"Added samples to workout");
+      }];
+      
+      NSLog(@"Saved the data");
+    }];
+}
+
+- (void)saveleftPlankTime:(double)leftTime rightPlankTime:(double)rightTime {
   HKUnit *cal = [HKUnit kilocalorieUnit];
   
   float duration = leftTime + rightTime;
-  
-//  HKQuantity *pushUpsQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:pushups];
-//  HKQuantity *crunchesQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:crunches];
-  
   float calsPerHour = 408; // for planks, found info based on 150lbs
   float calsPerSecond = calsPerHour/360.0;
   
