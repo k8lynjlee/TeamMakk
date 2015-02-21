@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SummaryTableViewController : UITableViewController
+@class HKHealthStore;
 
+@interface SummaryTableViewController : UITableViewController
+@property (nonatomic) HKHealthStore *healthStore;
 @end
