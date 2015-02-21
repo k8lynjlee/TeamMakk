@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLE.h"
 
 @protocol BluetoothListenerDelegate
 
@@ -14,7 +15,7 @@
 
 @end
 
-@interface BluetoothShieldHelper : NSObject
+@interface BluetoothShieldHelper : NSObject < BLEDelegate >
 
 -(void) setListener: (id<BluetoothListenerDelegate>) newListener;
 
