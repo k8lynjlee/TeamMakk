@@ -9,9 +9,14 @@
 /* Begin PBXBuildFile section */
 		A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */; };
 		A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E81A988D8B00BA4D59 /* BLE.m */; };
+		BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */; };
+		BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */; };
+		BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B31A98898000533FD6 /* ExerciseCell.m */; };
+		BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B61A98922300533FD6 /* GoalsTableViewController.m */; };
+		BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B91A98929200533FD6 /* GoalsTableViewCell.m */; };
 		BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AA1A987D4E00959BF5 /* main.m */; };
 		BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */; };
-		BCC0B1B11A987D4E00959BF5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* ViewController.m */; };
+		BCC0B1B11A987D4E00959BF5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* MainViewController.m */; };
 		BCC0B1B61A987D4E00959BF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCC0B1B51A987D4E00959BF5 /* Images.xcassets */; };
 		BCC0B1B91A987D4E00959BF5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCC0B1B71A987D4E00959BF5 /* LaunchScreen.xib */; };
 		BCC0B1C51A987D4E00959BF5 /* TeamMakkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1C41A987D4E00959BF5 /* TeamMakkTests.m */; };
@@ -34,13 +39,23 @@
 		A67965E71A988D8B00BA4D59 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		A67965E81A988D8B00BA4D59 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		A67965E91A988D8B00BA4D59 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
+		BCA8D1A61A98873600533FD6 /* WorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutViewController.h; sourceTree = "<group>"; };
+		BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutViewController.m; sourceTree = "<group>"; };
+		BCA8D1AF1A98880300533FD6 /* SummaryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryTableViewController.h; sourceTree = "<group>"; };
+		BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryTableViewController.m; sourceTree = "<group>"; };
+		BCA8D1B21A98898000533FD6 /* ExerciseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseCell.h; sourceTree = "<group>"; };
+		BCA8D1B31A98898000533FD6 /* ExerciseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseCell.m; sourceTree = "<group>"; };
+		BCA8D1B51A98922300533FD6 /* GoalsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsTableViewController.h; sourceTree = "<group>"; };
+		BCA8D1B61A98922300533FD6 /* GoalsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsTableViewController.m; sourceTree = "<group>"; };
+		BCA8D1B81A98929200533FD6 /* GoalsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsTableViewCell.h; sourceTree = "<group>"; };
+		BCA8D1B91A98929200533FD6 /* GoalsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsTableViewCell.m; sourceTree = "<group>"; };
 		BCC0B1A51A987D4E00959BF5 /* TeamMakk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamMakk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC0B1A91A987D4E00959BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCC0B1AA1A987D4E00959BF5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BCC0B1AC1A987D4E00959BF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BCC0B1AF1A987D4E00959BF5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BCC0B1B01A987D4E00959BF5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BCC0B1AF1A987D4E00959BF5 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		BCC0B1B01A987D4E00959BF5 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BCC0B1B51A987D4E00959BF5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BCC0B1B81A987D4E00959BF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		BCC0B1BE1A987D4E00959BF5 /* TeamMakkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamMakkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,8 +120,18 @@
 				BCC0B1D01A987ED900959BF5 /* TeamMakk.entitlements */,
 				BCC0B1AC1A987D4E00959BF5 /* AppDelegate.h */,
 				BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */,
-				BCC0B1AF1A987D4E00959BF5 /* ViewController.h */,
-				BCC0B1B01A987D4E00959BF5 /* ViewController.m */,
+				BCA8D1B51A98922300533FD6 /* GoalsTableViewController.h */,
+				BCA8D1B61A98922300533FD6 /* GoalsTableViewController.m */,
+				BCA8D1B81A98929200533FD6 /* GoalsTableViewCell.h */,
+				BCA8D1B91A98929200533FD6 /* GoalsTableViewCell.m */,
+				BCA8D1AF1A98880300533FD6 /* SummaryTableViewController.h */,
+				BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */,
+				BCA8D1B21A98898000533FD6 /* ExerciseCell.h */,
+				BCA8D1B31A98898000533FD6 /* ExerciseCell.m */,
+				BCA8D1A61A98873600533FD6 /* WorkoutViewController.h */,
+				BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */,
+				BCC0B1AF1A987D4E00959BF5 /* MainViewController.h */,
+				BCC0B1B01A987D4E00959BF5 /* MainViewController.m */,
 				BCC0B1B51A987D4E00959BF5 /* Images.xcassets */,
 				BCC0B1B71A987D4E00959BF5 /* LaunchScreen.xib */,
 				BCC0B1A81A987D4E00959BF5 /* Supporting Files */,
@@ -252,6 +277,13 @@
 				A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */,
 				BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */,
 				A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */,
+				BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */,
+				BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */,
+				BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */,
+				BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */,
+				BCC0B1B11A987D4E00959BF5 /* MainViewController.m in Sources */,
+				BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */,
+				BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */,
 				BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 teammakk. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainViewController.h"
 
-@interface ViewController () {
+@interface MainViewController () {
 //    UIToolbar *_toolbar;
 }
 
 @end
 
-@implementation ViewController
+@implementation MainViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];

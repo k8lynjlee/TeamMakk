@@ -7,11 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "MainViewController.h"
+#import "GoalsTableViewController.h"
+#import "SummaryTableViewController.h"
+#import "WorkoutViewController.h"
 
 @interface AppDelegate () {
   UINavigationController *_navigationController;  // The main navigation controller for the app.
-  ViewController *_mainViewController;     // The main view controller for the app.
+  MainViewController *_mainViewController;     // The main view controller for the app.
 
 }
 
@@ -28,7 +31,7 @@
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
   
   // Configure our main view controller.
-  _mainViewController = [[ViewController alloc] init];
+  _mainViewController = [[MainViewController alloc] init];
   [self configureMainViewControllerTabs];
   
   // Attach our main view controller to our navigation controller.
@@ -47,30 +50,24 @@
 - (void)configureMainViewControllerTabs
 {
   // Instantiate our view controllers.
-  UIViewController *schoolViewController = [[UIViewController alloc] init];
-  UIViewController *courseBinViewController = [[UIViewController alloc] init];
-  UIViewController *scheduleViewController = [[UIViewController alloc] init];
+  SummaryTableViewController *summaryVC = [[SummaryTableViewController alloc] init];
+  GoalsTableViewController *goalsVC = [[GoalsTableViewController alloc] init];
+  WorkoutViewController *workoutVC = [[WorkoutViewController alloc] init];
   
   // Configure our tabs.
-  NSArray *viewControllers = [[NSArray alloc] initWithObjects:schoolViewController, courseBinViewController, scheduleViewController, nil];
+  NSArray *viewControllers = [[NSArray alloc] initWithObjects:summaryVC, goalsVC, workoutVC, nil];
   NSArray *tabItemTitles = [[NSArray alloc] initWithObjects:@"Summary", @"Goals", @"Workouts", nil];
   
   NSArray *tabItemImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"diary"],[UIImage imageNamed:@"rank"],[UIImage imageNamed:@"dumbbell"], nil];
-  
-//  NSArray *tabItemImagesFill = [[NSArray alloc] initWithObjects:
-//                                 [UIImage imageNamed:@"tabIconClassesFill"],
-//                                 [UIImage imageNamed:@"tabIconCourseBinFill"],
-//                                 [UIImage imageNamed:@"tabIconScheduleFill"], nil
-//                                 ];
-  
+
   // Assign a tab bar item to each view controller.
   for (int i = 0; i < viewControllers.count; i++) {
     UIViewController *viewController = viewControllers[i];
     UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:tabItemTitles[i] image:tabItemImages[i] selectedImage:tabItemImages[i]];
     viewController.tabBarItem = tabBarItem;
   }
-  _mainViewController.tabBar.tintColor = [UIColor yellowColor];
-  _mainViewController.tabBar.barTintColor = [UIColor colorWithWhite:0.2 alpha:1.0];
+//  _mainViewController.tabBar.tintColor = [UIColor blueColor];
+//  _mainViewController.tabBar.barTintColor = [UIColor colorWithWhite:0.2 alpha:1.0];
   _mainViewController.viewControllers = viewControllers;
 }
 
