@@ -28,8 +28,6 @@
   self.tableView.tableHeaderView = headerView;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
-  
-  
   if ([HKHealthStore isHealthDataAvailable]) {
     self.healthStore = [[HKHealthStore alloc] init];
     
@@ -42,7 +40,7 @@
       }
       dispatch_async(dispatch_get_main_queue(), ^{
         [self saveNumberPushups:20 crunches:50 leftPlankTime:60 rightPlankTime:18];
-        // self update info from healthkit
+        // self update info from healthkit.
       });
     }];
   }
@@ -80,21 +78,22 @@
 }
 
 - (void)saveNumberPushups:(double)pushups crunches:(double)crunches leftPlankTime:(double)leftTime rightPlankTime:(double)rightTime {
-  HKUnit *repUnit = [HKUnit countUnit];
-  HKUnit *plankTime = [HKUnit secondUnit];
+//  HKUnit *repUnit = [HKUnit countUnit];
+//  HKUnit *plankTime = [HKUnit secondUnit];
   HKUnit *cal = [HKUnit kilocalorieUnit];
   
-  float caloriesFromPlank = (leftTime + rightTime)*.2;
   float duration = leftTime + rightTime;
   
-  HKQuantity *pushUpsQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:pushups];
-  HKQuantity *crunchesQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:crunches];
+//  HKQuantity *pushUpsQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:pushups];
+//  HKQuantity *crunchesQuantity = [HKQuantity quantityWithUnit:repUnit doubleValue:crunches];
   
-  HKQuantity *leftPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:leftTime*.5];
-  HKQuantity *rightPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:rightTime*.5];
+  float calsPerHour = 408; // for planks, found info based on 150lbs
+  float calsPerSecond = calsPerHour/360.0;
+  
+  HKQuantity *leftPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:leftTime*calsPerSecond];
+  HKQuantity *rightPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:rightTime*calsPerSecond];
   
   HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
-  HKQuantity *calories = [HKQuantity quantityWithUnit:cal doubleValue:caloriesFromPlank];
   
   HKQuantitySample *leftPlank = [HKQuantitySample quantitySampleWithType:type
                                                                 quantity:leftPlankEnergy
@@ -110,15 +109,11 @@
   
   NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:leftPlank, rightPlank, nil];
   
-//  NSArray *objects = [[NSArray alloc] initWithObjects:pushUpsQuantity, crunchesQuantity, leftPlankTime, rightPlankTime, nil];
-  
-
-  
   HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
                                                 startDate:[NSDate date]
                                                   endDate:[NSDate date]
                                                  duration:duration
-                                        totalEnergyBurned:calories
+                                        totalEnergyBurned:nil
                                             totalDistance:nil
                                                  metadata:nil];
  
@@ -138,22 +133,8 @@
       NSLog(@"Added samples to workout");
     }];
     
-//    UIAlertView *savealert=[[UIAlertView alloc]initWithTitle:@"SmartMat" message:@"Values has been saved to HealthKit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    
     NSLog(@"Saved the data");
-//    [savealert show];
   }];
-  
-
-  
-//  [self.healthStore saveObjects:objects withCompletion:^(BOOL success, NSError *error) {
-//    if (!success) {
-//      NSLog(@"An error occured saving the data");
-//      abort();
-//    }
-//    UIAlertView *savealert=[[UIAlertView alloc]initWithTitle:@"SmartMat" message:@"Values has been saved to HealthKit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//    [savealert show];
-//  }];
 }
 
 
@@ -161,7 +142,6 @@
 
 // Returns the types of data that Fit wishes to write to HealthKit.
 - (NSSet *)dataTypesToWrite {
-//  HKQuantityType *dietaryCalorieEnergyType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDietaryEnergyConsumed];
   HKQuantityType *activeEnergyBurnType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
   HKWorkoutType *workoutType = [HKWorkoutType workoutType];
   
