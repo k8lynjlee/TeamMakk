@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */; };
+		A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E81A988D8B00BA4D59 /* BLE.m */; };
 		BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AA1A987D4E00959BF5 /* main.m */; };
 		BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */; };
 		BCC0B1B11A987D4E00959BF5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* ViewController.m */; };
@@ -27,6 +29,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A67965E31A988B5E00BA4D59 /* BluetoothShieldHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothShieldHelper.h; sourceTree = "<group>"; };
+		A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothShieldHelper.m; sourceTree = "<group>"; };
+		A67965E71A988D8B00BA4D59 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
+		A67965E81A988D8B00BA4D59 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
+		A67965E91A988D8B00BA4D59 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
 		BCC0B1A51A987D4E00959BF5 /* TeamMakk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamMakk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC0B1A91A987D4E00959BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCC0B1AA1A987D4E00959BF5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -62,6 +69,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A67965E61A988D7300BA4D59 /* BluetoothHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				A67965E71A988D8B00BA4D59 /* BLE.h */,
+				A67965E81A988D8B00BA4D59 /* BLE.m */,
+				A67965E91A988D8B00BA4D59 /* BLEDefines.h */,
+			);
+			name = BluetoothHelpers;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		BCC0B19C1A987D4E00959BF5 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +110,9 @@
 				BCC0B1B51A987D4E00959BF5 /* Images.xcassets */,
 				BCC0B1B71A987D4E00959BF5 /* LaunchScreen.xib */,
 				BCC0B1A81A987D4E00959BF5 /* Supporting Files */,
+				A67965E31A988B5E00BA4D59 /* BluetoothShieldHelper.h */,
+				A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */,
+				A67965E61A988D7300BA4D59 /* BluetoothHelpers */,
 			);
 			path = TeamMakk;
 			sourceTree = "<group>";
@@ -171,7 +192,7 @@
 				TargetAttributes = {
 					BCC0B1A41A987D4E00959BF5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = Y9YD9KGK2U;
+						DevelopmentTeam = FUTU96J3U9;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 1;
@@ -228,7 +249,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCC0B1B11A987D4E00959BF5 /* ViewController.m in Sources */,
+				A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */,
 				BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */,
+				A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */,
 				BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +443,7 @@
 				BCC0B1CA1A987D4E00959BF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BCC0B1CB1A987D4E00959BF5 /* Build configuration list for PBXNativeTarget "TeamMakkTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +452,7 @@
 				BCC0B1CD1A987D4E00959BF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
