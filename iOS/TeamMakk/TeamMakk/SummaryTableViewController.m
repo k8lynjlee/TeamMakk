@@ -11,7 +11,9 @@
 
 #define kSummaryTableViewCell    @"kSummaryTableViewCell"
 
-@interface SummaryTableViewController ()
+@interface SummaryTableViewController () {
+  NSArray *_exercises;
+}
 
 @end
 
@@ -20,8 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Crunches", @"Side planks", nil];
+  UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
+  self.tableView.tableHeaderView = headerView;
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -46,14 +50,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    ExerciseCell *cell = [tableView dequeueReusableCellWithIdentifier:kSummaryTableViewCell forIndexPath:indexPath];
-//  cell.textLabel.text = @"Test cell";
-//  if (cell == nil) {
-   ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell];
-//    cell.textLabel.text = @"Test";
-//  }
+   ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row]];
+  CGRect frame = CGRectMake(5, 5, self.tableView.frame.size.width - 10, self.tableView.frame.size.height/3.0 - 5);
+  cell.frame = frame;
+  [cell layoutCellComponents];
     
-    return cell;
+  return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

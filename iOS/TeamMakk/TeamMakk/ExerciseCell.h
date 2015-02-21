@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JBLineChartView.h"
 
-@interface ExerciseCell : UITableViewCell
+@interface ExerciseCell : UITableViewCell <JBLineChartViewDataSource, JBLineChartViewDelegate>
+@property (nonatomic, strong) UILabel *exerciseLabel;
+@property (nonatomic, strong) NSString *exerciseString;
 
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+           exercise:(NSString *)exercise;
+- (void)layoutCellComponents;
 @end

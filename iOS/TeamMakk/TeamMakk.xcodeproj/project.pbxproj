@@ -24,6 +24,9 @@
 		BCC0B1CF1A987ED900959BF5 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCC0B1CE1A987ED900959BF5 /* HealthKit.framework */; };
 		BCE01A071A9897AE0057DF4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */; };
 		BCE01A081A9897B20057DF4B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* MainViewController.m */; };
+		BCE01A101A989C3F0057DF4B /* JBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE01A0B1A989C3F0057DF4B /* JBBarChartView.m */; };
+		BCE01A111A989C3F0057DF4B /* JBChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE01A0D1A989C3F0057DF4B /* JBChartView.m */; };
+		BCE01A121A989C3F0057DF4B /* JBLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE01A0F1A989C3F0057DF4B /* JBLineChartView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,12 @@
 		BCC0B1C41A987D4E00959BF5 /* TeamMakkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamMakkTests.m; sourceTree = "<group>"; };
 		BCC0B1CE1A987ED900959BF5 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BCC0B1D01A987ED900959BF5 /* TeamMakk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TeamMakk.entitlements; sourceTree = "<group>"; };
+		BCE01A0A1A989C3F0057DF4B /* JBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBBarChartView.h; sourceTree = "<group>"; };
+		BCE01A0B1A989C3F0057DF4B /* JBBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBBarChartView.m; sourceTree = "<group>"; };
+		BCE01A0C1A989C3F0057DF4B /* JBChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBChartView.h; sourceTree = "<group>"; };
+		BCE01A0D1A989C3F0057DF4B /* JBChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBChartView.m; sourceTree = "<group>"; };
+		BCE01A0E1A989C3F0057DF4B /* JBLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBLineChartView.h; sourceTree = "<group>"; };
+		BCE01A0F1A989C3F0057DF4B /* JBLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBLineChartView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +147,7 @@
 				BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */,
 				BCA8D1B21A98898000533FD6 /* ExerciseCell.h */,
 				BCA8D1B31A98898000533FD6 /* ExerciseCell.m */,
+				BCE01A091A989C280057DF4B /* JBCharts */,
 				BCA8D1A61A98873600533FD6 /* WorkoutViewController.h */,
 				BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */,
 				BCC0B1AF1A987D4E00959BF5 /* MainViewController.h */,
@@ -180,6 +190,19 @@
 				BCC0B1C31A987D4E00959BF5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BCE01A091A989C280057DF4B /* JBCharts */ = {
+			isa = PBXGroup;
+			children = (
+				BCE01A0A1A989C3F0057DF4B /* JBBarChartView.h */,
+				BCE01A0B1A989C3F0057DF4B /* JBBarChartView.m */,
+				BCE01A0C1A989C3F0057DF4B /* JBChartView.h */,
+				BCE01A0D1A989C3F0057DF4B /* JBChartView.m */,
+				BCE01A0E1A989C3F0057DF4B /* JBLineChartView.h */,
+				BCE01A0F1A989C3F0057DF4B /* JBLineChartView.m */,
+			);
+			name = JBCharts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,9 +311,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */,
+				BCE01A121A989C3F0057DF4B /* JBLineChartView.m in Sources */,
+				BCE01A111A989C3F0057DF4B /* JBChartView.m in Sources */,
 				A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */,
 				BCE01A071A9897AE0057DF4B /* AppDelegate.m in Sources */,
 				BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */,
+				BCE01A101A989C3F0057DF4B /* JBBarChartView.m in Sources */,
 				BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */,
 				BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */,
 				BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */,
