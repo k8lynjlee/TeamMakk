@@ -13,6 +13,7 @@
 		A67965F01A98AC7200BA4D59 /* WorkoutPointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965EF1A98AC7200BA4D59 /* WorkoutPointObject.m */; };
 		A67965F21A98AD9B00BA4D59 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A67965F11A98AD9B00BA4D59 /* libsqlite3.0.dylib */; };
 		A67965F61A9913F200BA4D59 /* YLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965F51A9913F200BA4D59 /* YLProgressBar.m */; };
+		BC6B04E51A994D2D0044AFAD /* CounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B04E41A994D2D0044AFAD /* CounterView.m */; };
 		BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */; };
 		BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */; };
 		BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B31A98898000533FD6 /* ExerciseCell.m */; };
@@ -53,6 +54,8 @@
 		A67965F11A98AD9B00BA4D59 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		A67965F41A9913F200BA4D59 /* YLProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLProgressBar.h; sourceTree = "<group>"; };
 		A67965F51A9913F200BA4D59 /* YLProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLProgressBar.m; sourceTree = "<group>"; };
+		BC6B04E31A994D2D0044AFAD /* CounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounterView.h; sourceTree = "<group>"; };
+		BC6B04E41A994D2D0044AFAD /* CounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounterView.m; sourceTree = "<group>"; };
 		BCA8D1A61A98873600533FD6 /* WorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutViewController.h; sourceTree = "<group>"; };
 		BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutViewController.m; sourceTree = "<group>"; };
 		BCA8D1AF1A98880300533FD6 /* SummaryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryTableViewController.h; sourceTree = "<group>"; };
@@ -150,6 +153,8 @@
 			children = (
 				A67965F31A9913DB00BA4D59 /* YLProgressBar */,
 				BCC0B1D01A987ED900959BF5 /* TeamMakk.entitlements */,
+				BC6B04E31A994D2D0044AFAD /* CounterView.h */,
+				BC6B04E41A994D2D0044AFAD /* CounterView.m */,
 				BCC0B1AC1A987D4E00959BF5 /* AppDelegate.h */,
 				BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */,
 				BCA8D1B51A98922300533FD6 /* GoalsTableViewController.h */,
@@ -326,6 +331,7 @@
 				A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */,
 				BCE01A121A989C3F0057DF4B /* JBLineChartView.m in Sources */,
 				BCE01A111A989C3F0057DF4B /* JBChartView.m in Sources */,
+				BC6B04E51A994D2D0044AFAD /* CounterView.m in Sources */,
 				A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */,
 				BCE01A071A9897AE0057DF4B /* AppDelegate.m in Sources */,
 				BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */,
