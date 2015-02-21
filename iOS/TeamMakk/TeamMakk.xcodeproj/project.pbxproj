@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */; };
 		A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965E81A988D8B00BA4D59 /* BLE.m */; };
+		A67965ED1A989FD900BA4D59 /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965EC1A989FD900BA4D59 /* DatabaseManager.m */; };
+		A67965F01A98AC7200BA4D59 /* WorkoutPointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A67965EF1A98AC7200BA4D59 /* WorkoutPointObject.m */; };
+		A67965F21A98AD9B00BA4D59 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A67965F11A98AD9B00BA4D59 /* libsqlite3.0.dylib */; };
 		BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */; };
 		BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B01A98880300533FD6 /* SummaryTableViewController.m */; };
 		BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B31A98898000533FD6 /* ExerciseCell.m */; };
@@ -39,6 +42,11 @@
 		A67965E71A988D8B00BA4D59 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		A67965E81A988D8B00BA4D59 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		A67965E91A988D8B00BA4D59 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
+		A67965EB1A989FD900BA4D59 /* DatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseManager.h; sourceTree = "<group>"; };
+		A67965EC1A989FD900BA4D59 /* DatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseManager.m; sourceTree = "<group>"; };
+		A67965EE1A98AC7200BA4D59 /* WorkoutPointObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutPointObject.h; sourceTree = "<group>"; };
+		A67965EF1A98AC7200BA4D59 /* WorkoutPointObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutPointObject.m; sourceTree = "<group>"; };
+		A67965F11A98AD9B00BA4D59 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		BCA8D1A61A98873600533FD6 /* WorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutViewController.h; sourceTree = "<group>"; };
 		BCA8D1A71A98873600533FD6 /* WorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutViewController.m; sourceTree = "<group>"; };
 		BCA8D1AF1A98880300533FD6 /* SummaryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryTableViewController.h; sourceTree = "<group>"; };
@@ -70,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A67965F21A98AD9B00BA4D59 /* libsqlite3.0.dylib in Frameworks */,
 				BCC0B1CF1A987ED900959BF5 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +107,7 @@
 		BCC0B19C1A987D4E00959BF5 = {
 			isa = PBXGroup;
 			children = (
+				A67965F11A98AD9B00BA4D59 /* libsqlite3.0.dylib */,
 				BCC0B1CE1A987ED900959BF5 /* HealthKit.framework */,
 				BCC0B1A71A987D4E00959BF5 /* TeamMakk */,
 				BCC0B1C11A987D4E00959BF5 /* TeamMakkTests */,
@@ -138,6 +148,10 @@
 				A67965E31A988B5E00BA4D59 /* BluetoothShieldHelper.h */,
 				A67965E41A988B5E00BA4D59 /* BluetoothShieldHelper.m */,
 				A67965E61A988D7300BA4D59 /* BluetoothHelpers */,
+				A67965EB1A989FD900BA4D59 /* DatabaseManager.h */,
+				A67965EC1A989FD900BA4D59 /* DatabaseManager.m */,
+				A67965EE1A98AC7200BA4D59 /* WorkoutPointObject.h */,
+				A67965EF1A98AC7200BA4D59 /* WorkoutPointObject.m */,
 			);
 			path = TeamMakk;
 			sourceTree = "<group>";
@@ -280,7 +294,9 @@
 				BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */,
 				BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */,
 				BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */,
+				A67965F01A98AC7200BA4D59 /* WorkoutPointObject.m in Sources */,
 				BCE01A081A9897B20057DF4B /* MainViewController.m in Sources */,
+				A67965ED1A989FD900BA4D59 /* DatabaseManager.m in Sources */,
 				BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */,
 				BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */,
 			);
