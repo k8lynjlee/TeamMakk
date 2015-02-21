@@ -1,18 +1,20 @@
 //
-//  SecondViewController.m
+//  ViewController.m
 //  TeamMakk
 //
 //  Created by Kaitlyn Lee on 2/21/15.
 //  Copyright (c) 2015 teammakk. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "ViewController.h"
 
-@interface SecondViewController ()
+@interface ViewController () {
+//    UIToolbar *_toolbar;
+}
 
 @end
 
-@implementation SecondViewController
+@implementation ViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];

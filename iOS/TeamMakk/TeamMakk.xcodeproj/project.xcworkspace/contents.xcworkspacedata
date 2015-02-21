@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:TeamMakk.xcodeproj">
+      location = "self:TeamMakk.xcodeproj">
    </FileRef>
 </Workspace>

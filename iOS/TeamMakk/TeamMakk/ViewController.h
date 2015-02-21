@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  ViewController.h
 //  TeamMakk
 //
 //  Created by Kaitlyn Lee on 2/21/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface ViewController : UITabBarController
 
 
 @end
