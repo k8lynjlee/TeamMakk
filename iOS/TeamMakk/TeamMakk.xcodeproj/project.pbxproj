@@ -15,12 +15,12 @@
 		BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B61A98922300533FD6 /* GoalsTableViewController.m */; };
 		BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA8D1B91A98929200533FD6 /* GoalsTableViewCell.m */; };
 		BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AA1A987D4E00959BF5 /* main.m */; };
-		BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */; };
-		BCC0B1B11A987D4E00959BF5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* MainViewController.m */; };
 		BCC0B1B61A987D4E00959BF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCC0B1B51A987D4E00959BF5 /* Images.xcassets */; };
 		BCC0B1B91A987D4E00959BF5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCC0B1B71A987D4E00959BF5 /* LaunchScreen.xib */; };
 		BCC0B1C51A987D4E00959BF5 /* TeamMakkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1C41A987D4E00959BF5 /* TeamMakkTests.m */; };
 		BCC0B1CF1A987ED900959BF5 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCC0B1CE1A987ED900959BF5 /* HealthKit.framework */; };
+		BCE01A071A9897AE0057DF4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1AD1A987D4E00959BF5 /* AppDelegate.m */; };
+		BCE01A081A9897B20057DF4B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC0B1B01A987D4E00959BF5 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,16 +273,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCC0B1B11A987D4E00959BF5 /* ViewController.m in Sources */,
 				A67965E51A988B5E00BA4D59 /* BluetoothShieldHelper.m in Sources */,
-				BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */,
 				A67965EA1A988D8B00BA4D59 /* BLE.m in Sources */,
+				BCE01A071A9897AE0057DF4B /* AppDelegate.m in Sources */,
 				BCA8D1BA1A98929200533FD6 /* GoalsTableViewCell.m in Sources */,
 				BCA8D1A81A98873600533FD6 /* WorkoutViewController.m in Sources */,
 				BCA8D1B41A98898000533FD6 /* ExerciseCell.m in Sources */,
 				BCA8D1B71A98922300533FD6 /* GoalsTableViewController.m in Sources */,
-				BCC0B1B11A987D4E00959BF5 /* MainViewController.m in Sources */,
-				BCC0B1AE1A987D4E00959BF5 /* AppDelegate.m in Sources */,
+				BCE01A081A9897B20057DF4B /* MainViewController.m in Sources */,
 				BCA8D1B11A98880300533FD6 /* SummaryTableViewController.m in Sources */,
 				BCC0B1AB1A987D4E00959BF5 /* main.m in Sources */,
 			);
@@ -403,6 +401,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TeamMakk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -417,6 +416,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TeamMakk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

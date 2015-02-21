@@ -9,14 +9,23 @@
 #import "WorkoutViewController.h"
 
 @interface WorkoutViewController ()
-
+@property (nonatomic, strong) UIButton *button;
 @end
 
 @implementation WorkoutViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  self.button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 30)];
+  self.button.backgroundColor = [UIColor redColor];
+  [self.button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.button];
     // Do any additional setup after loading the view.
+}
+
+- (void)buttonPressed:(id)sender
+{
+  NSLog(@"Button pressed");
 }
 
 - (void)didReceiveMemoryWarning {
