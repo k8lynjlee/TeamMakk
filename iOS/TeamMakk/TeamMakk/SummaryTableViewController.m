@@ -8,6 +8,7 @@
 
 #import "SummaryTableViewController.h"
 #import "ExerciseCell.h"
+#import <HealthKit/HealthKit.h>
 
 #define kSummaryTableViewCell    @"kSummaryTableViewCell"
 
@@ -26,9 +27,189 @@
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
   self.tableView.tableHeaderView = headerView;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
+  if ([HKHealthStore isHealthDataAvailable]) {
+    self.healthStore = [[HKHealthStore alloc] init];
     
+    NSSet *writeDataTypes = [self dataTypesToWrite];
+    NSSet *readDataTypes = [self dataTypesToRead];
+    [self.healthStore requestAuthorizationToShareTypes:writeDataTypes readTypes:readDataTypes completion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"You didn't allow healthkit to access these read/write data types");
+        return;
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self saveleftPlankTime:60 rightPlankTime:18];
+//        [self savePushupTime:30];
+//        [self saveCrunchesTime:40];
+        // self update info from healthkit.
+      });
+    }];
+  }
+//
+  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)saveCrunchesTime:(double)time {
+  HKUnit *cal = [HKUnit kilocalorieUnit];
+  
+  float calsPerHour = 408; // for planks, found info based on 150lbs
+  float calsPerSecond = calsPerHour/360.0;
+  
+  HKQuantity *crunchesEnergy = [HKQuantity quantityWithUnit:cal doubleValue:time*calsPerSecond];
+  HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+  HKQuantitySample *pushups = [HKQuantitySample quantitySampleWithType:type
+                                                              quantity:crunchesEnergy
+                                                             startDate:[NSDate date]
+                                                               endDate:[NSDate date]
+                                                              metadata:nil];
+  
+  NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:pushups, nil];
+  HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
+                                                startDate:[NSDate date]
+                                                  endDate:[NSDate date]
+                                                 duration:time
+                                        totalEnergyBurned:nil
+                                            totalDistance:nil
+                                                 metadata:nil];
+  
+  
+  [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
+    if (!success) {
+      NSLog(@"An error occured saving the data");
+      abort();
+    }
+    
+    [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"An error occured adding sample to workout");
+        NSLog(@"%@", error.description);
+        abort();
+      }
+      NSLog(@"Added samples to workout");
+    }];
+    
+    NSLog(@"Saved the data");
+  }];
+}
+
+
+- (void)savePushupTime:(double)time {
+    HKUnit *cal = [HKUnit kilocalorieUnit];
+
+    float calsPerHour = 408; // for planks, found info based on 150lbs
+    float calsPerSecond = calsPerHour/360.0;
+    
+    HKQuantity *pushupEnergy = [HKQuantity quantityWithUnit:cal doubleValue:time*calsPerSecond];
+    HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+    HKQuantitySample *pushups = [HKQuantitySample quantitySampleWithType:type
+                                                                  quantity:pushupEnergy
+                                                                 startDate:[NSDate date]
+                                                                   endDate:[NSDate date]
+                                                                  metadata:nil];
+  
+    NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:pushups, nil];
+    HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
+                                                  startDate:[NSDate date]
+                                                    endDate:[NSDate date]
+                                                   duration:time
+                                          totalEnergyBurned:nil
+                                              totalDistance:nil
+                                                   metadata:nil];
+    
+    
+    [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"An error occured saving the data");
+        abort();
+      }
+      
+      [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
+        if (!success) {
+          NSLog(@"An error occured adding sample to workout");
+          NSLog(@"%@", error.description);
+          abort();
+        }
+        NSLog(@"Added samples to workout");
+      }];
+      
+      NSLog(@"Saved the data");
+    }];
+}
+
+- (void)saveleftPlankTime:(double)leftTime rightPlankTime:(double)rightTime {
+  HKUnit *cal = [HKUnit kilocalorieUnit];
+  
+  float duration = leftTime + rightTime;
+  float calsPerHour = 408; // for planks, found info based on 150lbs
+  float calsPerSecond = calsPerHour/360.0;
+  
+  HKQuantity *leftPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:leftTime*calsPerSecond];
+  HKQuantity *rightPlankEnergy = [HKQuantity quantityWithUnit:cal doubleValue:rightTime*calsPerSecond];
+  
+  HKQuantityType *type = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+  
+  HKQuantitySample *leftPlank = [HKQuantitySample quantitySampleWithType:type
+                                                                quantity:leftPlankEnergy
+                                                               startDate:[NSDate date]
+                                                                 endDate:[NSDate date]
+                                                                metadata:nil];
+  
+  HKQuantitySample *rightPlank = [HKQuantitySample quantitySampleWithType:type
+                                                                 quantity:rightPlankEnergy
+                                                               startDate:[NSDate date]
+                                                                 endDate:[NSDate date]
+                                                                metadata:nil];
+  
+  NSMutableArray *samples = [[NSMutableArray alloc] initWithObjects:leftPlank, rightPlank, nil];
+  
+  HKWorkout *workout = [HKWorkout workoutWithActivityType:HKWorkoutActivityTypeFunctionalStrengthTraining
+                                                startDate:[NSDate date]
+                                                  endDate:[NSDate date]
+                                                 duration:duration
+                                        totalEnergyBurned:nil
+                                            totalDistance:nil
+                                                 metadata:nil];
+ 
+  
+  [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
+    if (!success) {
+      NSLog(@"An error occured saving the data");
+      abort();
+    }
+    
+    [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
+      if (!success) {
+        NSLog(@"An error occured adding sample to workout");
+        NSLog(@"%@", error.description);
+        abort();
+      }
+      NSLog(@"Added samples to workout");
+    }];
+    
+    NSLog(@"Saved the data");
+  }];
+}
+
+
+#pragma mark - HealthKit Permissions
+
+// Returns the types of data that Fit wishes to write to HealthKit.
+- (NSSet *)dataTypesToWrite {
+  HKQuantityType *activeEnergyBurnType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+  HKWorkoutType *workoutType = [HKWorkoutType workoutType];
+  
+  return [NSSet setWithObjects:workoutType, activeEnergyBurnType, nil];
+}
+
+// Returns the types of data that Fit wishes to read from HealthKit.
+- (NSSet *)dataTypesToRead {
+  HKQuantityType *heightType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierHeight];
+//  HKQuantityType *weightType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMass];
+  
+  return [NSSet setWithObjects:heightType, nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +228,6 @@
     // Return the number of rows in the section.
     return 3;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row]];

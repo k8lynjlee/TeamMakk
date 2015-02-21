@@ -11,6 +11,7 @@
 #import "GoalsTableViewController.h"
 #import "SummaryTableViewController.h"
 #import "WorkoutViewController.h"
+#import <HealthKit/HealthKit.h>
 
 @interface AppDelegate () {
   UINavigationController *_navigationController;  // The main navigation controller for the app.
@@ -42,6 +43,7 @@
   [self.window setRootViewController:_navigationController];
   [self.window setBackgroundColor:[UIColor whiteColor]];
   [self.window makeKeyAndVisible];
+  
   return YES;
 }
 
