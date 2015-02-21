@@ -11,7 +11,11 @@
 
 @protocol BluetoothListenerDelegate
 
--(void) didReceiveMessageFromShield: (NSString *) message;
+-(void) didStartWorkout: (int) workoutNumber;
+
+-(void) didEndWorkout: (int) workoutNumber;
+
+-(void) didReceiveWorkoutNumberUpdate: (int) workoutUpdate;
 
 @end
 
@@ -20,6 +24,8 @@
 + (id)sharedShieldHelper;
 
 -(void) setListener: (id<BluetoothListenerDelegate>) newListener;
+
+-(void) sendControlMessage;
 
 //Scan for bluetooth device. Connect to the first one
 -(void) initDevice;

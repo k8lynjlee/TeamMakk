@@ -10,4 +10,10 @@
 
 @interface GoalsTableViewCell : UITableViewCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+           exercise:(NSString *)exercise;
+
+- (void)layoutCellComponents;
+
 @end

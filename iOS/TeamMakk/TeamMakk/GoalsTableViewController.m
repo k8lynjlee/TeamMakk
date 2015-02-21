@@ -47,8 +47,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-  GoalsTableViewCell *cell = [[GoalsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kGoalsTableViewCell];
-  cell.textLabel.text = @"Goals";
+  GoalsTableViewCell *cell = [[GoalsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kGoalsTableViewCell exercise:@"TEST"];
+  //cell.textLabel.text = @"Goals";
     // Configure the cell...
     
     return cell;
@@ -56,7 +56,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  return self.view.frame.size.height / 3;
+  return 60;
 }
 
 /*
