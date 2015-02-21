@@ -14,19 +14,39 @@
   BLE *bleShield;
 }
 
++ (id)sharedShieldHelper
+{
+  static BluetoothShieldHelper *sharedShieldHelper = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedShieldHelper = [[self alloc] init];
+  });
+  return sharedShieldHelper;
+}
+
 -(void) setListener: (id<BluetoothListenerDelegate>) newListener
 {
   _listener = newListener;
 }
 
+-(instancetype) init
+{
+  self = [super init];
+  
+  if (self)
+  {
+    //Setup shieeeezzzz
+    bleShield = [[BLE alloc] init];
+    [bleShield controlSetup];
+    bleShield.delegate = self;
+  }
+  return self;
+}
+
 -(void) initDevice
 {
-  //Build
-  bleShield = [[BLE alloc] init];
-  [bleShield controlSetup];
-  bleShield.delegate = self;
-  
   //Connect to the device
+  [self BLEShieldScan:nil];
   
   //
 }
@@ -39,6 +59,7 @@
   }
   else
   {
+    
   }
 }
 
@@ -46,7 +67,7 @@
 {
   NSData *d = [NSData dataWithBytes:data length:length];
   NSString *s = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-  //NSLog(@"%@", s);
+  NSLog(@"%@", s);
   //NSNumber *form = [NSNumber numberWithBool:YES];
   
   /*NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:s, TEXT_STR, form, FORM, nil];
@@ -54,6 +75,7 @@
   
   [_tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
   [_tableView reloadData];*/
+  //NSLog
   [_listener didReceiveMessageFromShield:s];
 }
 

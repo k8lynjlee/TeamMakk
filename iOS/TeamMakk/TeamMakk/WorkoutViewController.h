@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BluetoothShieldHelper.h"
 
-@interface WorkoutViewController : UIViewController
+@interface WorkoutViewController : UIViewController <BluetoothListenerDelegate>
 
 @end

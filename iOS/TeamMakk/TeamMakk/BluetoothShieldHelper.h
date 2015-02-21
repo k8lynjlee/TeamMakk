@@ -17,6 +17,8 @@
 
 @interface BluetoothShieldHelper : NSObject < BLEDelegate >
 
++ (id)sharedShieldHelper;
+
 -(void) setListener: (id<BluetoothListenerDelegate>) newListener;
 
 //Scan for bluetooth device. Connect to the first one

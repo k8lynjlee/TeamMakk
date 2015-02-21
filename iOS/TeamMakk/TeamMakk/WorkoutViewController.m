@@ -21,16 +21,23 @@
   [self.button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
     // Do any additional setup after loading the view.
+  [[BluetoothShieldHelper sharedShieldHelper] setListener:self];
 }
 
 - (void)buttonPressed:(id)sender
 {
   NSLog(@"Button pressed");
+  [[BluetoothShieldHelper sharedShieldHelper]initDevice];
+}
+
+-(void) didReceiveMessageFromShield:(NSString *)message
+{
+  NSLog(@"Received message!");
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    //Dispose of any resources that can be recreated.
 }
 
 /*
