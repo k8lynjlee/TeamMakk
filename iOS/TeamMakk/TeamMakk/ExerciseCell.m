@@ -31,7 +31,6 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    CGRect frame = self.frame;
     [self layoutCellComponents];
   }
   return self;

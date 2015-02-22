@@ -41,16 +41,25 @@
   _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 400, 100, 30)];
   _counterLabel.text = @"0";
   [self.view addSubview:_counterLabel];
-  
-  
-  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .2, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .6) exercise:@"Pushups"];
+  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Pushups"];
 }
 
 - (void)buttonPressed:(id)sender
 {
   NSLog(@"Button pressed");
   [self.view addSubview:_counterView];
+  
+  NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 2.0
+                                                target: self
+                                              selector:@selector(updateCounter)
+                                              userInfo: nil
+                                               repeats:YES];
+  
   [[BluetoothShieldHelper sharedShieldHelper]initDevice];
+}
+
+- (void)updateCounter {
+  [_counterView increaseCount];
 }
 
 - (void)buttonPressedMessage:(id)sender

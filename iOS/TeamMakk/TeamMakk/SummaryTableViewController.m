@@ -30,13 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//  self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
-  
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
     _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Crunches", @"Side planks", nil];
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
   headerView.backgroundColor = [UIColor grayColor];
-//  [self.view addSubview:headerView];
   self.tableView.tableHeaderView = headerView;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
