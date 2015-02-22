@@ -95,6 +95,22 @@ static UIColor *kJBChartVerticalSelectionViewDefaultBgColor = nil;
     [self reloadData];
 }
 
+- (void)setScaleView:(UIView *)scaleView
+{
+  if (_scaleView)
+  {
+    [_scaleView removeFromSuperview];
+    _scaleView = nil;
+  }
+  _scaleView = scaleView;
+  _scaleView.clipsToBounds = YES;
+  
+  [self validateHeaderAndFooterHeights];
+  
+  [self addSubview:_scaleView];
+  [self reloadData];
+}
+
 - (void)setFooterView:(UIView *)footerView
 {
     if (_footerView)

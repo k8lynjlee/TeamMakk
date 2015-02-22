@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, JBChartViewState){
  */
 @property (nonatomic, strong) UIView *footerView;
 @property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIView *scaleView;
 
 /**
  *  The vertical padding between the header and highest chart point (bar, line, etc).

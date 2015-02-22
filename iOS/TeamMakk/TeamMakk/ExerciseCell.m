@@ -8,6 +8,7 @@
 
 #import "ExerciseCell.h"
 #import "JBLineChartFooterView.h"
+#import "JBLineChartScaleView.h"
 
 const float JBCellPadding = 20.0f;
 
@@ -108,6 +109,13 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   footerView.footerSeparatorColor = [UIColor blackColor];
   footerView.sectionCount = 7;
   lineChartView.footerView = footerView;
+  
+  JBLineChartScaleView *scaleView = [[JBLineChartScaleView alloc] initWithFrame:CGRectMake(lineChartView.frame.origin.x - 10, lineChartView.frame.origin.y, 10, lineChartView.frame.size.height - 29)];
+  scaleView.zeroLabel.text = @"0";
+  scaleView.topLabel.text = [NSString stringWithFormat:@"%i", (int)[lineChartView maximumValue]];
+//  scaleView.backgroundColor = [UIColor whiteColor];
+
+  [_separatorView addSubview:scaleView];
   
   [_separatorView addSubview:lineChartView];
   [lineChartView reloadData];
