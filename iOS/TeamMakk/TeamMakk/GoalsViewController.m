@@ -49,6 +49,13 @@
   [super viewWillAppear:animated];
   
   self.navigationController.navigationBar.topItem.title = @"Goals";
+  
+  numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex: _mainSwitcher.selectedSegmentIndex];
+  [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
+  
+  _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
+  
+  [_currentTallyNum sizeToFit];
 }
 
 - (void)viewDidLoad {
@@ -274,6 +281,7 @@
   numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex:_mainSwitcher.selectedSegmentIndex];
   
   _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
+  [_currentTallyNum sizeToFit];
   
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
 }

@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
   CAGradientLayer *gradient = [CAGradientLayer layer];
   gradient.frame = _separatorView.bounds;
-  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:1.0 green:.38 blue:.08 alpha:.5] CGColor], (id)[[UIColor colorWithRed:1.0 green:.07 blue:.03 alpha:.8] CGColor], nil];
+  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:1.0 green:(128.0/255.0) blue:0 alpha:.5] CGColor], (id)[[UIColor colorWithRed:1.0 green:.00 blue:.00 alpha:1.0] CGColor], nil];
   [_separatorView.layer insertSublayer:gradient atIndex:0];
   //A9E8E6
  // _separatorView.backgroundColor = [UIColor colorWithRed:(169/255.0) green:(232/255.0) blue:(230/255.0) alpha:.8];
