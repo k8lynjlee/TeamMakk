@@ -138,10 +138,22 @@
   _activateLayer.frame = activateFrame;
   
   UIView * firstCircle = [[UIView alloc] initWithFrame:CGRectMake(10, 185, 250, 250 )];
-  firstCircle.backgroundColor = [UIColor greenColor];
+  //firstCircle.backgroundColor = [UIColor greenColor];
   firstCircle.layer.cornerRadius = 125;
-  firstCircle.layer.borderWidth = 1.0;
+  //
+  //firstCircle.layer.borderWidth = 2.0;
+  firstCircle.layer.borderColor = [UIColor orangeColor].CGColor;
   [self addSubview:firstCircle];
+  
+  CAGradientLayer *gradient = [CAGradientLayer layer];
+  gradient.frame = firstCircle.bounds;
+  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:1.0 green:.38 blue:.08 alpha:.5] CGColor], (id)[[UIColor colorWithRed:1.0 green:.07 blue:.03 alpha:.8] CGColor], nil];
+  [firstCircle.layer insertSublayer:gradient atIndex:0];
+  //A9E8E6
+  // _separatorView.backgroundColor = [UIColor colorWithRed:(169/255.0) green:(232/255.0) blue:(230/255.0) alpha:.8];
+  //   _separatorView.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(20/255.0) blue:(20/255.0) alpha:.8];
+  [firstCircle.layer setCornerRadius:125.0f];
+  [firstCircle.layer setMasksToBounds:YES];
   
   UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActivatePressed)];
   [firstCircle addGestureRecognizer:tap];
@@ -149,6 +161,7 @@
   _workoutTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, 400, 400)];
   _workoutTypeLabel.font = [UIFont systemFontOfSize:60];
   _workoutTypeLabel.text = @"";
+  _workoutTypeLabel.textColor = [UIColor lightGrayColor];
   [_workoutTypeLabel sizeToFit];
   CGRect workoutFrame = _workoutTypeLabel.frame;
   workoutFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - workoutFrame.size.width) / 2;
@@ -159,6 +172,7 @@
   currentLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 170, 100, 100)];
     currentLabel.font = [UIFont systemFontOfSize:60];
   currentLabel.text = @"Activate";
+  currentLabel.textColor = [UIColor whiteColor];
   [currentLabel sizeToFit];
   CGRect currFrame = currentLabel.frame;
   currFrame.origin.x = (250 - currFrame.size.width ) / 2 + 10;
@@ -172,14 +186,16 @@
   //[self addSubview:slash];
   
   UIView * secondCircle = [[UIView alloc] initWithFrame:CGRectMake(240, 400, 120, 120 )];
-  secondCircle.backgroundColor = [UIColor greenColor];
+  //secondCircle.backgroundColor = [UIColor greenColor];
   secondCircle.layer.cornerRadius = 60;
-  secondCircle.layer.borderWidth = 1.0;
+  secondCircle.layer.borderWidth = 10.0;
+  secondCircle.layer.borderColor = [UIColor orangeColor].CGColor;
   [self addSubview:secondCircle];
   
   goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(270, 310, 100, 100)];
   goalLabel.text = @"Goal";
   goalLabel.font = [UIFont systemFontOfSize:30];
+  goalLabel.textColor = [UIColor orangeColor];
   [goalLabel sizeToFit];
   CGRect goalFrameTwo = goalLabel.frame;
   goalFrameTwo.origin.x = (120 - goalFrameTwo.size.width ) / 2 + 240;
