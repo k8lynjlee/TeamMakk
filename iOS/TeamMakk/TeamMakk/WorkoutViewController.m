@@ -46,6 +46,12 @@
   [self.view addSubview:self.button];*/
   _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
   
+  if ([_goalArray count] == 0)
+  {
+    [[DatabaseManager getSharedInstance] addDefaultGoals];
+    _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
+  }
+  
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
   self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -130,14 +136,25 @@
 
 -(void) didEndWorkout: (int) workoutNumber
 {
+  if ((workoutNumber == 2) || (workoutNumber == 3))
+  {
+    //NumWorkouts its coming from the timer in the counterview
+    numWorkout = [_counterView getElapsedTime];
+  }
+  
   _workoutLabel.text = @"No workout (END)";
   [_counterView userHasFinished];
   [_counterView setGoal:0];
   [_counterView setTitle:@"Get in position"];
   
   [_counterView endTimer];
+  
   // Save the workout that we just did
-  [[DatabaseManager getSharedInstance]saveExercise:workoutNumber numberOfReps:numWorkout date:[NSDate date]];
+  NSLog(@"Logging the following workout: %i for %i reps", (workoutNumber-1), numWorkout);
+  [[DatabaseManager getSharedInstance]saveExercise:(workoutNumber-1) numberOfReps:numWorkout date:[NSDate date]];
+  
+  //Force table reload
+  
 }
 
 -(void) didReceiveWorkoutNumberUpdate: (int) workoutUpdate

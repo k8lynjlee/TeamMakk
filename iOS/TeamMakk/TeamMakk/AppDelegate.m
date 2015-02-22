@@ -100,11 +100,21 @@
   //Create a timer to poll until the bluetooth works
   [[BluetoothShieldHelper sharedShieldHelper] setListener:workoutVC];
   [self performSelector:@selector(connectBluetooth) withObject:self afterDelay:2.0];
+  
+  //Try adding data here
+  //[[DatabaseManager getSharedInstance] saveExercise:0 numberOfReps:10 date:[NSDate date]];
+  
+  NSLog(@"Adding activity");
 }
 
 -(void) connectBluetooth
 {
     [[BluetoothShieldHelper sharedShieldHelper]initDevice];
+  
+  int currentActivity = [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex:0];
+  
+    NSLog(@"Polled activity");
+  NSLog(@"%i", currentActivity);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

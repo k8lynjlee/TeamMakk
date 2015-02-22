@@ -35,6 +35,8 @@
   
   UIStepper *_goalStepper;
   
+  int prevStepperVal;
+  
   int firstGoal;
 }
 
@@ -191,6 +193,8 @@
   _goalStepper = [[UIStepper alloc] initWithFrame:CGRectMake(162, 548, 150, 200)];
   _goalStepper.minimumValue = - (firstGoal);
   _goalStepper.maximumValue = 255 - firstGoal;
+  _goalStepper.value = 0;
+  prevStepperVal = 0;
   [_goalStepper addTarget:self action:(@selector(stepperPressed)) forControlEvents:UIControlEventValueChanged];
   _goalStepper.tintColor = [UIColor redColor];
   [self.view addSubview:_goalStepper];
@@ -199,7 +203,14 @@
 
 -(void) stepperPressed
 {
-  _dailyGoalNum.text = [NSString stringWithFormat:@"%i", firstGoal + (int)_goalStepper.value ];
+  //
+  int currValue = [_dailyGoalNum.text intValue];
+  
+  currValue += _goalStepper.value - prevStepperVal;
+  
+  prevStepperVal = _goalStepper.value;
+  
+  _dailyGoalNum.text = [NSString stringWithFormat:@"%i", currValue ];
   
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
   
