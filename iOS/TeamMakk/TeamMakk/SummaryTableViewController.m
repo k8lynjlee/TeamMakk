@@ -186,14 +186,14 @@
   [self.healthStore saveObject:workout withCompletion:^(BOOL success, NSError *error) {
     if (!success) {
       NSLog(@"An error occured saving the data");
-      abort();
+//      abort();
     }
     
     [self.healthStore addSamples:samples toWorkout:workout completion:^(BOOL success, NSError *error) {
       if (!success) {
         NSLog(@"An error occured adding sample to workout");
         NSLog(@"%@", error.description);
-        abort();
+//        abort();
       }
       NSLog(@"Added samples to workout");
     }];

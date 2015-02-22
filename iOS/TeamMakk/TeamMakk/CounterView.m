@@ -50,7 +50,7 @@
   CGRect frameFill = CGRectMake(startFill.x, startFill.y, self.frame.size.width, progress*self.frame.size.height);
   
   _fillView = [[UIView alloc] initWithFrame:frameFill];
-  _fillView.backgroundColor = [UIColor yellowColor];
+  _fillView.backgroundColor = [UIColor blackColor];
 
 //  _fillView.frame = frameFill;
 //  [self updateFill];
@@ -82,6 +82,7 @@
   self.goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
   self.goalLabel.text = @"/--";
   self.goalLabel.font = [UIFont systemFontOfSize:70];
+  self.goalLabel.textColor = [UIColor whiteColor];
   [self.goalLabel sizeToFit];
   CGRect goalFrame = self.goalLabel.frame;
   goalFrame.origin.x = self.frame.size.width - goalFrame.size.width - 20;
@@ -92,6 +93,7 @@
   self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
   self.countLabel.text = @"0";
   self.countLabel.font = [UIFont systemFontOfSize:190];
+  self.countLabel.textColor = [UIColor whiteColor];
   [self.countLabel sizeToFit];
   CGRect frame = self.countLabel.frame;
   frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 10, self.goalLabel.frame.size.height);
@@ -102,25 +104,23 @@
   self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
   self.exerciseLabel.text = self.exerciseString;
   self.exerciseLabel.font = [UIFont systemFontOfSize:40];
+  self.exerciseLabel.textColor = [UIColor whiteColor];
   [self.exerciseLabel sizeToFit];
   CGRect exerciseFrame = self.exerciseLabel.frame;
   exerciseFrame.origin.x = (self.frame.size.width - self.exerciseLabel.frame.size.width)/2;
   exerciseFrame.origin.y = self.countLabel.frame.origin.y - self.exerciseLabel.frame.size.height;
   self.exerciseLabel.frame = exerciseFrame;
-  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
+  self.backgroundColor = [UIColor redColor];
+//  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
   self.layer.cornerRadius = 32.0f;
   [self addSubview:self.exerciseLabel];
+//  [self startTimer];
 }
 
 - (void) startTimer {
   self.isCounter = NO;
   _start = [NSDate date];
-  _t = [[NSTimer alloc] initWithFireDate:_start
-                               interval:1
-                                 target:self
-                               selector:@selector(increaseTime)
-                                userInfo:nil
-                                repeats:YES];
+  _t = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseTime) userInfo:nil repeats:YES];
 }
 
 - (void)startCounter {
@@ -131,10 +131,20 @@
 - (void)increaseTime {
   NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:_start];
     self.countLabel.alpha = 0;
-  
   [UIView animateWithDuration:0.5 animations:^{
-  self.countLabel.text = [[NSDateComponentsFormatter new] stringFromTimeInterval:elapsed];
-    [self.countLabel sizeToFit];
+  self.countLabel.font = [UIFont systemFontOfSize:120];
+    NSDateComponentsFormatter *formatter = [[NSDateComponentsFormatter alloc] init];
+    formatter.allowedUnits = NSCalendarUnitMinute |  NSCalendarUnitSecond;
+    formatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
+    NSString *string = [formatter stringFromTimeInterval:elapsed];
+    NSLog(@"%@", string);
+    
+    self.countLabel.text = [NSString stringWithFormat:@"%@", string];
+    NSLog(@"%@",self.countLabel.text);
+  [self.countLabel sizeToFit];
+    CGRect frame = self.countLabel.frame;
+    frame.origin.x = (self.frame.size.width - frame.size.width)/2;
+    self.countLabel.frame = frame;
       self.countLabel.alpha = 1;
   }];
 }
@@ -146,6 +156,9 @@
   [UIView animateWithDuration:0.5 animations:^{
     self.countLabel.text = [[NSDateComponentsFormatter new] stringFromTimeInterval:zero];
     [self.countLabel sizeToFit];
+    CGRect frame = self.countLabel.frame;
+    frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 6, _originalFrame.origin.y);
+    self.countLabel.frame = frame;
     self.countLabel.alpha = 1;
   }];
 }
