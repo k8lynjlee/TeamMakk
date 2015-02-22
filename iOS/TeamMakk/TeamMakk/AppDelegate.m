@@ -86,10 +86,20 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+  //Create a timer to poll until the bluetooth works
+    [[BluetoothShieldHelper sharedShieldHelper] setListener:nil];
+  [self performSelector:@selector(connectBluetooth) withObject:self afterDelay:2.0];
+}
+
+-(void) connectBluetooth
+{
+    [[BluetoothShieldHelper sharedShieldHelper]initDevice];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

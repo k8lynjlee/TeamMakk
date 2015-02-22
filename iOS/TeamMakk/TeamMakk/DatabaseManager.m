@@ -203,12 +203,14 @@ static NSString* kGoalsDatabaseName = @"Goals";
     {
       while (sqlite3_step(statement) == SQLITE_ROW)
       {
-        int exercise = (int)sqlite3_column_text(statement, 0);
-        int number = (int)sqlite3_column_text(statement, 1);
+        NSString * exercise = [[NSString alloc] initWithUTF8String:
+                        (const char *) sqlite3_column_text(statement, 0)];
+        NSString * number = [[NSString alloc] initWithUTF8String:
+                      (const char *) sqlite3_column_text(statement, 1)];
         NSString *dataTime = [[NSString alloc] initWithUTF8String:
                               (const char *) sqlite3_column_text(statement, 2)];
         
-        [resultArray addObject:[[WorkoutPointObject alloc] initWithExercise:exerciseNum
+        [resultArray addObject:[[WorkoutPointObject alloc] initWithExercise:exercise
                                                                     number:number
                                                                      date: dataTime]];
       }

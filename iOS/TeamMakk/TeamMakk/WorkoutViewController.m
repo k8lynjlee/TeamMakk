@@ -8,9 +8,14 @@
 
 #import "WorkoutViewController.h"
 #import "CounterView.h"
+#import "DatabaseManager.h"
 
 @interface WorkoutViewController () {
   CounterView *_counterView;
+  
+  int numWorkout;
+  
+  NSArray *_goalArray;
 }
 @property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) UILabel *workoutLabel;
@@ -19,19 +24,35 @@
 
 @implementation WorkoutViewController
 
+-(void) initWithGoals: (NSArray *)goals
+{
+  _goalArray = goals;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-  self.button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 30)];
+  
+  /*self.button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 30)];
   self.button.backgroundColor = [UIColor redColor];
   [self.button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.button];*/
+  _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
+  
+  CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+  
+  self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  self.button.frame = CGRectMake(250, 100, 100, 30);
+//  self.button = [[UIButton alloc] initWithFrame:CGRectMake(250, 100, 100, 30)];
+  [self.button setTitle:@"Start" forState:UIControlStateNormal];
+  [self.button addTarget:self action:@selector(buttonPressedMessage:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.button sizeToFit];
+  self.button.frame = CGRectMake( (screenWidth - self.button.frame.size.width)/2, 100, 100, 30);
+  [self.button sizeToFit];
+  
   [self.view addSubview:self.button];
   
-  self.button = [[UIButton alloc] initWithFrame:CGRectMake(250, 100, 100, 30)];
-  self.button.backgroundColor = [UIColor blueColor];
-  [self.button addTarget:self action:@selector(buttonPressedMessage:) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.button];
     // Do any additional setup after loading the view.
-  [[BluetoothShieldHelper sharedShieldHelper] setListener:self];
   
   _workoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 400, 100, 30)];
   _workoutLabel.text = @"No workout now";
@@ -42,20 +63,8 @@
   _counterLabel.text = @"0";
   [self.view addSubview:_counterLabel];
   _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Pushups"];
-}
-
-- (void)buttonPressed:(id)sender
-{
-  NSLog(@"Button pressed");
+  
   [self.view addSubview:_counterView];
-  
-  NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 2.0
-                                                target: self
-                                              selector:@selector(updateCounter)
-                                              userInfo: nil
-                                               repeats:YES];
-  
-  [[BluetoothShieldHelper sharedShieldHelper]initDevice];
 }
 
 - (void)updateCounter {
@@ -65,7 +74,7 @@
 - (void)buttonPressedMessage:(id)sender
 {
   NSLog(@"Button pressed");
-  [[BluetoothShieldHelper sharedShieldHelper]sendControlMessage];
+  [[BluetoothShieldHelper sharedShieldHelper]sendControlMessage: _goalArray];
 }
 
 -(void) didReceiveMessageFromShield:(NSString *)message
@@ -98,11 +107,14 @@
 -(void) didEndWorkout: (int) workoutNumber
 {
   _workoutLabel.text = @"No workout (END)";
+  // Save the workout that we just did
+  [[DatabaseManager getSharedInstance]saveExercise:workoutNumber numberOfReps:numWorkout date:[NSDate date]];
 }
 
 -(void) didReceiveWorkoutNumberUpdate: (int) workoutUpdate
 {
   _counterLabel.text = [NSString stringWithFormat:@"%i", workoutUpdate];
+  numWorkout = workoutUpdate;
 }
 
 /*

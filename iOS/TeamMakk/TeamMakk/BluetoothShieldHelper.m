@@ -7,6 +7,7 @@
 //
 
 #import "BluetoothShieldHelper.h"
+#import "WorkoutGoalObject.h"
 
 @implementation BluetoothShieldHelper
 {
@@ -20,6 +21,8 @@
   NSTimer *workoutTimer;
   
   int currBufferIndex;
+  
+  NSArray *_goalNumbers;
 }
 
 + (id)sharedShieldHelper
@@ -129,7 +132,7 @@
       currentWorkoutNumber = 1;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:10];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
       
     } else if (value == 2)
     {
@@ -137,20 +140,20 @@
       currentWorkoutNumber = 2;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:10];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
     } else if (value == 3)
     {
       //L Plank
       currentWorkoutNumber = 3;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:10];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
     } else if (value == 4){
       //Situp
       currentWorkoutNumber = 4;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:10];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
     } else if (value == 253) {
       //0xFD aka start command
       
@@ -208,8 +211,9 @@
   //[[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
 }
 
--(void) sendControlMessage
+-(void) sendControlMessage :(NSArray *)goals
 {
+  _goalNumbers = goals;
   [self sendNumberToArduino:1];
 }
 
@@ -223,7 +227,6 @@
     [bleShield write:data];
   } else {
     NSLog(@"Trying to send message without connected BLE Shield");
-    
   }
 }
 
