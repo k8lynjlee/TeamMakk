@@ -12,6 +12,6 @@
 
 -(instancetype) initWithExercise:(NSString *)exerciseNum
                   number:(NSString *)number
-                    date:(NSString *)dataTime;
+                    date:(NSString *)dateTime;
 
 @end

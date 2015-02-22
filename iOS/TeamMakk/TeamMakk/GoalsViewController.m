@@ -68,7 +68,7 @@
   
   numCurrentValues = 3;
   
-  _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Situps", @"Left Plank", @"Right Plank"]];
+  _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Right Plank",  @"Left Plank", @"Situps"]];
   _mainSwitcher.frame = CGRectMake(0, 40, 100, 100);
   _mainSwitcher.selectedSegmentIndex = 0;
   [_mainSwitcher sizeToFit];
