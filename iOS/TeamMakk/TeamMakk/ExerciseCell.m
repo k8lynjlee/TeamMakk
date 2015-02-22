@@ -7,7 +7,15 @@
 //
 
 #import "ExerciseCell.h"
-//#import "JBLineChartView.h"
+#import "JBLineChartFooterView.h"
+
+const float JBCellPadding = 20.0f;
+
+typedef NS_ENUM(NSInteger, JBLineChartLine){
+  JBLineChartLineSolid,
+  JBLineChartLineDashed,
+  JBLineChartLineCount
+};
 
 @interface ExerciseCell () {
   UIView *_separatorView;
@@ -50,25 +58,56 @@
 - (void)layoutCellComponents
 {
   _separatorView = [[UIView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.width, self.frame.size.height)];
-  self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 16, self.frame.size.width, 20)];
+  self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(JBCellPadding, 16, self.frame.size.width, JBCellPadding)];
   self.exerciseLabel.text = self.exerciseString;
   self.exerciseLabel.font = [UIFont systemFontOfSize:16];
   [self.exerciseLabel sizeToFit];
 
   [_separatorView addSubview:self.exerciseLabel];
 
-  CAGradientLayer *gradient = [CAGradientLayer layer];
-  gradient.frame = _separatorView.bounds;
-  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:.31 green:.49 blue:.74 alpha:.5] CGColor], (id)[[UIColor colorWithRed:.64 green:.74 blue:.98 alpha:.8] CGColor], nil];
-  [_separatorView.layer insertSublayer:gradient atIndex:0];
-  
+//  CAGradientLayer *gradient = [CAGradientLayer layer];
+//  gradient.frame = _separatorView.bounds;
+//  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:.31 green:.49 blue:.74 alpha:.5] CGColor], (id)[[UIColor colorWithRed:.64 green:.74 blue:.98 alpha:.8] CGColor], nil];
+//  [_separatorView.layer insertSublayer:gradient atIndex:0];
+  //A9E8E6
+  _separatorView.backgroundColor = [UIColor colorWithRed:(169/255.0) green:(232/255.0) blue:(230/255.0) alpha:.8];
   [_separatorView.layer setCornerRadius:8.0f];
   [_separatorView.layer setMasksToBounds:YES];
   
-  CGRect frame = CGRectMake(20, 40, self.frame.size.width - 40, 100);
+  CGRect frame = CGRectMake(JBCellPadding, (self.frame.size.height - 120 + JBCellPadding)/2 - CGRectGetMaxY(self.exerciseLabel.frame) + JBCellPadding, self.frame.size.width - JBCellPadding*2, (self.frame.size.height - CGRectGetMaxY(self.exerciseLabel.frame) - JBCellPadding*2));
   JBLineChartView *lineChartView = [[JBLineChartView alloc] initWithFrame:frame];
   lineChartView.dataSource = self;
   lineChartView.delegate = self;
+//  lineChartView.backgroundColor = [UIColor whiteColor];
+  
+  float footerHeight = self.frame.size.height - CGRectGetMaxY(frame);
+  
+  JBLineChartFooterView *footerView = [[JBLineChartFooterView alloc] initWithFrame:CGRectMake(JBCellPadding, ceil(self.bounds.size.height * 0.5) - ceil(footerHeight * 0.5), self.bounds.size.width, footerHeight)];
+  footerView.backgroundColor = [UIColor clearColor];
+  
+  unsigned units = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+  NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+  NSMutableArray *dayNumbers = [[NSMutableArray alloc] init];
+  
+  for (int i = 7; i >=0 ; i--) {
+    NSTimeInterval secondsBefore = -60*60*24*i;
+    NSDate *before = [[NSDate alloc] init];
+    before = [NSDate dateWithTimeIntervalSinceNow:secondsBefore];
+    NSDateComponents *dayComponents = [calendar components:units fromDate:before];
+    NSInteger dayFound = [dayComponents day];
+    [dayNumbers addObject:[NSNumber numberWithInteger:dayFound].stringValue];
+  }
+  [footerView addLabelTitles:dayNumbers];
+  
+  NSDate *now = [NSDate date]; //
+  NSDateComponents *components = [calendar components:units fromDate:now];
+  NSInteger today = [components day]; // day
+  
+  footerView.rightLabel.text = [NSNumber numberWithInteger:today].stringValue;
+  footerView.rightLabel.textColor = [UIColor blackColor];
+  footerView.footerSeparatorColor = [UIColor blackColor];
+  footerView.sectionCount = 7;
+  lineChartView.footerView = footerView;
   
   [_separatorView addSubview:lineChartView];
   [lineChartView reloadData];
@@ -83,7 +122,7 @@
 
 - (NSUInteger)lineChartView:(JBLineChartView *)lineChartView numberOfVerticalValuesAtLineIndex:(NSUInteger)lineIndex
 {
-  return 5; // number of values for a line
+  return 7; // number of values for a line
 }
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
@@ -94,6 +133,25 @@
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView widthForLineAtLineIndex:(NSUInteger)lineIndex
 {
   return 2; // width of line in chart
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
+{
+  return [UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex {
+  return [UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+}
+
+- (JBLineChartViewLineStyle)lineChartView:(JBLineChartView *)lineChartView lineStyleForLineAtLineIndex:(NSUInteger)lineIndex
+{
+  return JBLineChartViewLineStyleDashed;
+}
+
+- (BOOL)lineChartView:(JBLineChartView *)lineChartView showsDotsForLineAtLineIndex:(NSUInteger)lineIndex
+{
+  return YES;
 }
 
 @end
