@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-  return rand() % 60; // y-position (y-axis) of point at horizontalIndex (x-axis)
+  return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
 }
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView widthForLineAtLineIndex:(NSUInteger)lineIndex

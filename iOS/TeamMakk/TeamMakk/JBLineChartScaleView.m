@@ -84,7 +84,7 @@ CGFloat const kJBLineChartScaleViewSeparatorWidth = 0.5f;
     }
   } else if (maxInt < 21) {
     float interval = self.frame.size.height / (maxInt);
-    for (int i = 2; i <= maxInt+3; i=i+4) {
+    for (int i = 4; i < maxInt+3; i=i+4) {
       UILabel *numLabel = [[UILabel alloc] init];
       numLabel.adjustsFontSizeToFitWidth = YES;
       numLabel.font = [UIFont systemFontOfSize:9];
@@ -101,7 +101,7 @@ CGFloat const kJBLineChartScaleViewSeparatorWidth = 0.5f;
     }
   } else {
     float interval = self.frame.size.height / (maxInt);
-    for (int i = 10; i <= maxInt+8; i=i+10) {
+    for (int i = 10; i < maxInt+8; i=i+10) {
       UILabel *numLabel = [[UILabel alloc] init];
       numLabel.adjustsFontSizeToFitWidth = YES;
       numLabel.font = [UIFont systemFontOfSize:9];
@@ -114,7 +114,9 @@ CGFloat const kJBLineChartScaleViewSeparatorWidth = 0.5f;
       numFrame.origin.x = self.frame.size.width - numFrame.size.width - 2;
       numFrame.origin.y = _zeroLabel.frame.origin.y - interval*i;
       numLabel.frame = numFrame;
-      [self addSubview:numLabel];
+      if (CGRectGetMinY(numLabel.frame) >= self.frame.origin.y) {
+        [self addSubview:numLabel];
+      }
     }
   }
 }
@@ -128,19 +130,13 @@ CGFloat const kJBLineChartScaleViewSeparatorWidth = 0.5f;
   CGContextSetLineWidth(context, 0.5);
   CGContextSetShouldAntialias(context, YES);
   
-  CGFloat xOffset = 3;
-  CGFloat yOffset = 0;
-  CGFloat lineLength = self.frame.size.height - 2*yOffset;
-  CGFloat stepLength = ceil((self.bounds.size.width) / (self.sectionCount - 1));
-  
   for (int i=0; i<_numSections; i++)
   {
     CGContextSaveGState(context);
     {
-      CGContextMoveToPoint(context, self.frame.size.width - (kJBLineChartScaleViewSeparatorWidth * 0.5), yOffset);
-      CGContextAddLineToPoint(context, self.frame.size.width -  (kJBLineChartScaleViewSeparatorWidth * 0.5), yOffset + lineLength);
+      CGContextMoveToPoint(context, self.frame.size.width - (kJBLineChartScaleViewSeparatorWidth * 0.5), 0);
+      CGContextAddLineToPoint(context, self.frame.size.width -  (kJBLineChartScaleViewSeparatorWidth * 0.5), self.frame.size.height);
       CGContextStrokePath(context);
-      xOffset += stepLength;
     }
     CGContextRestoreGState(context);
   }
