@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GoalsViewController : UIViewController
+@interface GoalsViewController : UIViewController < UITextFieldDelegate>
 
 @end

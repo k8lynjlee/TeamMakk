@@ -19,4 +19,10 @@
 
 -(NSMutableArray *) fetchExercisesWithExerciseNum: (int) exerciseNum;
 
+-(BOOL) updateGoals:(int) exerciseNum withNewGoal:(int)newGoal;
+
+-(NSMutableArray *) fetchAllGoals;
+
+-(BOOL) addDefaultGoals;
+
 @end

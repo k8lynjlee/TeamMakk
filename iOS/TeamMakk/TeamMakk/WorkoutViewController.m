@@ -26,7 +26,7 @@
   [self.button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
   
-  self.button = [[UIButton alloc] initWithFrame:CGRectMake(100, 300, 100, 30)];
+  self.button = [[UIButton alloc] initWithFrame:CGRectMake(250, 100, 100, 30)];
   self.button.backgroundColor = [UIColor blueColor];
   [self.button addTarget:self action:@selector(buttonPressedMessage:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
