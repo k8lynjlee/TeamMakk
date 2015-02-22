@@ -20,11 +20,23 @@
 
 @implementation SummaryTableViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  CGRect frame = self.view.frame;
+  frame.size.height = self.tableView.frame.size.height - self.tabBarController.tabBar.frame.size.height;
+  self.view.frame = frame;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+//  self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
+  
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
     _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Crunches", @"Side planks", nil];
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
+  headerView.backgroundColor = [UIColor grayColor];
+//  [self.view addSubview:headerView];
   self.tableView.tableHeaderView = headerView;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
@@ -47,7 +59,7 @@
     }];
   }
 //
-  
+//  [self.tableView setNeedsLayout];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -231,7 +243,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row]];
-  CGRect frame = CGRectMake(5, 5, self.tableView.frame.size.width - 10, self.tableView.frame.size.height/3.0 - 5);
+  CGRect frame = CGRectMake(5, 5, self.tableView.frame.size.width - 10, (self.tableView.frame.size.height)/3.0 - 5);
   cell.frame = frame;
   [cell layoutCellComponents];
     

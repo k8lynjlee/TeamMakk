@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CounterView : UIView
-
+- (id)initWithFrame:(CGRect)frame
+           exercise:(NSString *)exercise;
 @end

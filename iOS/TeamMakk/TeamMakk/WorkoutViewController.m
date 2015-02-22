@@ -7,8 +7,11 @@
 //
 
 #import "WorkoutViewController.h"
+#import "CounterView.h"
 
-@interface WorkoutViewController ()
+@interface WorkoutViewController () {
+  CounterView *_counterView;
+}
 @property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) UILabel *workoutLabel;
 @property (nonatomic, strong) UILabel *counterLabel;
@@ -38,11 +41,15 @@
   _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 400, 100, 30)];
   _counterLabel.text = @"0";
   [self.view addSubview:_counterLabel];
+  
+  
+  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .2, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .6) exercise:@"Pushups"];
 }
 
 - (void)buttonPressed:(id)sender
 {
   NSLog(@"Button pressed");
+  [self.view addSubview:_counterView];
   [[BluetoothShieldHelper sharedShieldHelper]initDevice];
 }
 
