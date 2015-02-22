@@ -13,6 +13,7 @@
 #import "WorkoutViewController.h"
 #import <HealthKit/HealthKit.h>
 #import "DatabaseManager.h"
+#import "SummaryTableViewController.h"
 
 @interface AppDelegate () {
   UINavigationController *_navigationController;  // The main navigation controller for the app.
@@ -38,7 +39,8 @@
   
   // Attach our main view controller to our navigation controller.
   _navigationController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
-  [_navigationController.navigationBar setHidden:YES];
+  [_navigationController.navigationBar setHidden:NO];
+  _navigationController.title = @"TEST";
   
   // Configure our window.
   [self.window setRootViewController:_navigationController];
@@ -71,6 +73,9 @@
   }
   _mainViewController.tabBar.tintColor = [UIColor redColor];
   _mainViewController.viewControllers = viewControllers;
+  //UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
+  //[window addSubview:navController];
+  //_mainViewController.navigationController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
 }
 
 

@@ -23,18 +23,22 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  CGRect frame = self.view.frame;
-  frame.size.height = self.tableView.frame.size.height - self.tabBarController.tabBar.frame.size.height;
-  self.view.frame = frame;
+  //self.edgesForExtendedLayout = UIRectEdgeAll;
+  //self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+  //CGRect frame = self.view.frame;
+  //frame.size.height = self.tableView.frame.size.height - self.tabBarController.tabBar.frame.size.height;
+  //self.view.frame = frame;
+  
+  self.navigationController.navigationBar.topItem.title = @"Summary";
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
     _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Crunches", @"Side planks", nil];
-  UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-  headerView.backgroundColor = [UIColor grayColor];
-  self.tableView.tableHeaderView = headerView;
+  UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
+  headerView.backgroundColor = [UIColor clearColor];
+  //self.tableView.tableHeaderView = headerView;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   if ([HKHealthStore isHealthDataAvailable]) {
@@ -54,11 +58,21 @@
         // self update info from healthkit.
       });
     }];
+    
   }
 //
 //  [self.tableView setNeedsLayout];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+  UIEdgeInsets inset = UIEdgeInsetsMake(60, 0, 0, 0);
+  self.tableView.contentInset = inset;
+  
+   self.title = @"Summary";
+  [self setTitle:@"Summary"];
+  
+  
+   self.navigationController.title = @"Summary";
 }
 
 - (void)saveCrunchesTime:(double)time {

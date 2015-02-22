@@ -30,6 +30,13 @@
   _goalArray = goals;
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  self.navigationController.navigationBar.topItem.title = @"Workouts";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
   
