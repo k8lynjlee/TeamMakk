@@ -9,6 +9,7 @@
 #import "WorkoutViewController.h"
 #import "CounterView.h"
 #import "DatabaseManager.h"
+#import "WorkoutGoalObject.h"
 
 @interface WorkoutViewController () {
   CounterView *_counterView;
@@ -57,12 +58,12 @@
   _workoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 400, 100, 30)];
   _workoutLabel.text = @"No workout now";
   [_workoutLabel sizeToFit];
-  [self.view addSubview:_workoutLabel];
+  //[self.view addSubview:_workoutLabel];
   
   _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 400, 100, 30)];
   _counterLabel.text = @"0";
   [self.view addSubview:_counterLabel];
-  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Pushups"];
+  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Get in Position"];
   
   [self.view addSubview:_counterView];
   
@@ -94,21 +95,29 @@
   if (workoutNumber == 1) {
     //Pushup
     _workoutLabel.text = @"Pushup";
+    [_counterView setTitle:@"Pushup"];
   } else if (workoutNumber == 2) {
     //R Plank
     _workoutLabel.text = @"R Plank";
+    [_counterView setTitle:@"R Plank"];
   } else if (workoutNumber == 3) {
     //L Plank
     _workoutLabel.text = @"L Plank";
+    [_counterView setTitle:@"L Plank"];
   } else if (workoutNumber == 4){
     //Situp
     _workoutLabel.text = @"Situp";
+    [_counterView setTitle:@"Situp"];
   }
+  
+  [_counterView setGoal:((WorkoutGoalObject *)_goalArray[workoutNumber - 1]).number];
 }
 
 -(void) didEndWorkout: (int) workoutNumber
 {
   _workoutLabel.text = @"No workout (END)";
+  [_counterView setTitle:@"Get in Position"];
+  [_counterView setGoal:0];
   // Save the workout that we just did
   [[DatabaseManager getSharedInstance]saveExercise:workoutNumber numberOfReps:numWorkout date:[NSDate date]];
 }
@@ -116,6 +125,7 @@
 -(void) didReceiveWorkoutNumberUpdate: (int) workoutUpdate
 {
   _counterLabel.text = [NSString stringWithFormat:@"%i", workoutUpdate];
+  [self updateCounter];
   numWorkout = workoutUpdate;
 }
 

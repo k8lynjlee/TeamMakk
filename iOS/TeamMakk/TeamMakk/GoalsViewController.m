@@ -136,8 +136,8 @@
   [self.view addGestureRecognizer:tap];
   
   touchView = [[UIView alloc] initWithFrame:CGRectMake(_dailyGoalNum.frame.origin.x - 10, _dailyGoalNum.frame.origin.y - 10, _dailyGoalNum.frame.size.width + 20 , _dailyGoalNum.frame.size.height + 20)];
-  touchView.backgroundColor = [UIColor blackColor];
-  touchView.alpha = 0.5;
+  touchView.backgroundColor = [UIColor clearColor];
+  touchView.alpha = 1.0;
   
   touchTap = [[UITapGestureRecognizer alloc]
          initWithTarget:self
