@@ -20,6 +20,11 @@
 
 @implementation SummaryTableViewController
 
+-(void) viewWillAppear:(BOOL)animated
+{
+  [self.tableView reloadData];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
@@ -35,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
-    _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Right Plank", @"Left Planks", @"Situps", nil];
+    _exercises = [[NSArray alloc] initWithObjects:@"Push Ups", @"Right Plank", @"Left Planks", @"Situps", nil];
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
   headerView.backgroundColor = [UIColor clearColor];
   //self.tableView.tableHeaderView = headerView;
@@ -106,7 +111,6 @@
 {
   return self.view.frame.size.height / 3;
 }
-
 
 /*
 // Override to support conditional editing of the table view.

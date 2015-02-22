@@ -35,6 +35,8 @@
     self.exerciseString = exercise;
     self.isCounter = YES;
     [self setUpView];
+    
+    int elapsedSeconds;
   }
   return self;
 }
@@ -133,8 +135,14 @@
   self.goalLabel.alpha = 0.0;
 }
 
+-(int) getElapsedTime
+{
+  return _current;
+}
+
 - (void) startTimer {
   self.isCounter = NO;
+  _current = 0;
   _start = [NSDate date];
   _t = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseTime) userInfo:nil repeats:YES];
 }
@@ -163,6 +171,7 @@
 }
 
 - (void)increaseTime {
+  _current++;
   NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:_start];
     self.countLabel.alpha = 0;
   [UIView animateWithDuration:0.5 animations:^{
@@ -195,6 +204,8 @@
     self.countLabel.frame = frame;
     self.countLabel.alpha = 1;
   }];
+  
+  //ElapsedTime = elapsedSeconds
 }
 
 - (void)increaseCount {

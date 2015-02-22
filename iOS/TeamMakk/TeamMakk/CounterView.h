@@ -27,4 +27,6 @@
 
 -(void) userHasFinished;
 
+-(int) getElapsedTime;
+
 @end

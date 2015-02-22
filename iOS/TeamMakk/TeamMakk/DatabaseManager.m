@@ -279,6 +279,7 @@ static NSString* kGoalsDatabaseName = @"Goals";
     if (sqlite3_prepare_v2(database,
                            query_stmt, -1, &statement, NULL) == SQLITE_OK)
     {
+      int maxCount = 0;
       while (sqlite3_step(statement) == SQLITE_ROW)
       {
         NSString * number = [[NSString alloc] initWithUTF8String:
@@ -286,9 +287,11 @@ static NSString* kGoalsDatabaseName = @"Goals";
         
         int count = [number intValue];
         
-        return count;
+        if(count > maxCount) {
+          maxCount = count;
+        }
       }
-      return 0;
+      return maxCount;
       sqlite3_reset(statement);
     }
   }
