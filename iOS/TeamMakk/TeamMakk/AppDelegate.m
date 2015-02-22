@@ -13,11 +13,12 @@
 #import "WorkoutViewController.h"
 #import <HealthKit/HealthKit.h>
 #import "DatabaseManager.h"
+#import "SummaryTableViewController.h"
 
 @interface AppDelegate () {
   UINavigationController *_navigationController;  // The main navigation controller for the app.
   MainViewController *_mainViewController;     // The main view controller for the app.
-
+  WorkoutViewController *workoutVC;
 }
 
 @end
@@ -38,7 +39,8 @@
   
   // Attach our main view controller to our navigation controller.
   _navigationController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
-  [_navigationController.navigationBar setHidden:YES];
+  [_navigationController.navigationBar setHidden:NO];
+  _navigationController.title = @"TEST";
   
   // Configure our window.
   [self.window setRootViewController:_navigationController];
@@ -55,7 +57,7 @@
   // Instantiate our view controllers.
   SummaryTableViewController *summaryVC = [[SummaryTableViewController alloc] init];
   GoalsViewController *goalsVC = [[GoalsViewController alloc] init];
-  WorkoutViewController *workoutVC = [[WorkoutViewController alloc] init];
+  workoutVC = [[WorkoutViewController alloc] init];
   
   // Configure our tabs.
   NSArray *viewControllers = [[NSArray alloc] initWithObjects: workoutVC, goalsVC, summaryVC, nil];
@@ -71,6 +73,9 @@
   }
   _mainViewController.tabBar.tintColor = [UIColor redColor];
   _mainViewController.viewControllers = viewControllers;
+  //UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
+  //[window addSubview:navController];
+  //_mainViewController.navigationController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
 }
 
 
@@ -93,7 +98,7 @@
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
   //Create a timer to poll until the bluetooth works
-  [[BluetoothShieldHelper sharedShieldHelper] setListener:nil];
+  [[BluetoothShieldHelper sharedShieldHelper] setListener:workoutVC];
   [self performSelector:@selector(connectBluetooth) withObject:self afterDelay:2.0];
 }
 

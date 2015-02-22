@@ -42,6 +42,13 @@
 
 @implementation GoalsViewController
 
+-(void) viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  self.navigationController.navigationBar.topItem.title = @"Goals";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -78,12 +85,12 @@
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
   _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Right Plank",  @"Left Plank", @"Situps"]];
-  _mainSwitcher.frame = CGRectMake(0, 40, 100, 100);
+  _mainSwitcher.frame = CGRectMake(0, 80, 100, 100);
   _mainSwitcher.selectedSegmentIndex = 0;
   _mainSwitcher.tintColor = [UIColor redColor];
   [_mainSwitcher sizeToFit];
   
-  _mainSwitcher.frame = CGRectMake((screenWidth - _mainSwitcher.frame.size.width)/2, 60, 100, 100);
+  _mainSwitcher.frame = CGRectMake((screenWidth - _mainSwitcher.frame.size.width)/2, 100, 100, 100);
   [_mainSwitcher sizeToFit];
 
   [_mainSwitcher addTarget:self
@@ -92,27 +99,26 @@
   
   [self.view addSubview:_mainSwitcher];
   
-  _progressRing = [[M13ProgressViewRing alloc] initWithFrame:CGRectMake(60, 140, 250, 250)];
-  [_progressRing setProgress:((double)numCurrentValues / firstGoal) animated:YES];
+  _progressRing = [[M13ProgressViewRing alloc] initWithFrame:CGRectMake(60, 180, 250, 250)];
   _progressRing.showPercentage = YES;
   _progressRing.primaryColor = [UIColor orangeColor];
   _progressRing.secondaryColor = [UIColor redColor];
   [self.view addSubview:_progressRing];
   
-  _dailyGoalText = [[UILabel alloc] initWithFrame:CGRectMake(20, 470, 80, 100)];
+  _dailyGoalText = [[UILabel alloc] initWithFrame:CGRectMake(20, 510, 80, 100)];
   _dailyGoalText.text = @"Goal ";
   _dailyGoalText.textAlignment = NSTextAlignmentRight;
   _dailyGoalText.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.0];
   //[_dailyGoalText sizeToFit];
   [self.view addSubview:_dailyGoalText];
   
-  _dailyGoalNum = [[UITextField alloc] initWithFrame:CGRectMake(_dailyGoalText.frame.origin.x + _dailyGoalText.frame.size.width + 10, 471, 120, 100)];
+  _dailyGoalNum = [[UITextField alloc] initWithFrame:CGRectMake(_dailyGoalText.frame.origin.x + _dailyGoalText.frame.size.width + 10, 511, 120, 100)];
   
-  UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(20, 555, 400, 1)];
+  UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(20, 595, 400, 1)];
   grayLine.backgroundColor = [UIColor lightGrayColor];
   [self.view addSubview:grayLine];
   
-  UIView *grayLine3 = [[UIView alloc] initWithFrame:CGRectMake(20, 415, 400, 1)];
+  UIView *grayLine3 = [[UIView alloc] initWithFrame:CGRectMake(20, 455, 400, 1)];
   grayLine3.backgroundColor = [UIColor lightGrayColor];
   [self.view addSubview:grayLine3];
   
@@ -124,28 +130,32 @@
   _dailyGoalNum.delegate = self;
   [self.view addSubview:_dailyGoalNum];
   
-  _currentTallyText = [[UILabel alloc] initWithFrame:CGRectMake(20, 400, 80, 100)];
+  _currentTallyText = [[UILabel alloc] initWithFrame:CGRectMake(20, 440, 80, 100)];
   _currentTallyText.text = @"Today ";
   _currentTallyText.textAlignment = NSTextAlignmentRight;
   _currentTallyText.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.0];
   //[_currentTallyText sizeToFit];
   
-  UIView *grayLineTwo = [[UIView alloc] initWithFrame:CGRectMake(20, 485, 400, 1)];
+  UIView *grayLineTwo = [[UIView alloc] initWithFrame:CGRectMake(20, 525, 400, 1)];
   grayLineTwo.backgroundColor = [UIColor lightGrayColor];
   [self.view addSubview:grayLineTwo];
   
   
-  _currentTallyNum = [[UILabel alloc] initWithFrame:CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width - 5, 380, 200, 160)];
+  _currentTallyNum = [[UILabel alloc] initWithFrame:CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width - 5, 420, 200, 160)];
   _currentTallyNum.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:40.0];
   _currentTallyNum.textColor = [UIColor grayColor];
-  _currentTallyNum.text = @"3";
+  
+  numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex:0];
+    [_progressRing setProgress:((double)numCurrentValues / firstGoal) animated:YES];
+  
+  _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
   //[_currentTallyNum sizeToFit];
   
  // _currentTallyText.frame = CGRectMake((screenWidth - _currentTallyText.frame.size.width - _currentTallyNum.frame.size.width)/2, 400, 100, 100);
   
   [self.view addSubview:_currentTallyText];
   
-  _currentTallyNum.frame = CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width + 10, 427, 100, 100);
+  _currentTallyNum.frame = CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width + 10, 467, 100, 100);
   
  // _currentTallyNum.text = @"3";
   [_currentTallyNum sizeToFit];
@@ -169,7 +179,7 @@
   
   [self.view addSubview:touchView];
   
-  _goalStepper = [[UIStepper alloc] initWithFrame:CGRectMake(162, 508, 150, 200)];
+  _goalStepper = [[UIStepper alloc] initWithFrame:CGRectMake(162, 548, 150, 200)];
   _goalStepper.minimumValue = - (firstGoal);
   _goalStepper.maximumValue = 255 - firstGoal;
   [_goalStepper addTarget:self action:(@selector(stepperPressed)) forControlEvents:UIControlEventValueChanged];
@@ -183,6 +193,10 @@
   _dailyGoalNum.text = [NSString stringWithFormat:@"%i", firstGoal + (int)_goalStepper.value ];
   
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
+  
+  [[DatabaseManager getSharedInstance] updateGoals:_mainSwitcher.selectedSegmentIndex withNewGoal: [_dailyGoalNum.text intValue]];
+  
+  [((WorkoutGoalObject *)_goals[_mainSwitcher.selectedSegmentIndex]) setNumber:[_dailyGoalNum.text intValue]];
 }
 
 -(void)enableKeyboard {
@@ -236,6 +250,11 @@
   
   _dailyGoalNum.text = [NSString stringWithFormat:@"%i", ((WorkoutGoalObject *)(_goals[_mainSwitcher.selectedSegmentIndex])).number];
   //[_dailyGoalNum sizeToFit];
+  
+  numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex:_mainSwitcher.selectedSegmentIndex];
+  
+  _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
+  
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
 }
 

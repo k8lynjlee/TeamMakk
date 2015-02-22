@@ -221,6 +221,34 @@ static NSString* kGoalsDatabaseName = @"Goals";
   return nil;
 }
 
+-(int) getCurrentActivityWithWorkoutIndex:(int) exerciseNum
+{
+  const char *dbpath = [databasePath UTF8String];
+  if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+  {
+    NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE Exercise = '%i'", kProgressDatabaseName, exerciseNum];
+    
+    const char *query_stmt = [querySQL UTF8String];
+    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+    if (sqlite3_prepare_v2(database,
+                           query_stmt, -1, &statement, NULL) == SQLITE_OK)
+    {
+      while (sqlite3_step(statement) == SQLITE_ROW)
+      {
+        NSString * number = [[NSString alloc] initWithUTF8String:
+                             (const char *) sqlite3_column_text(statement, 1)];
+        
+        int count = [number intValue];
+        
+        return count;
+      }
+      return 0;
+      sqlite3_reset(statement);
+    }
+  }
+  return 0;
+}
+
 -(BOOL) addDefaultGoals
 {
   const char *dbpath = [databasePath UTF8String];

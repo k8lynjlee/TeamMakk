@@ -21,4 +21,10 @@
 
 - (void) startTimer;
 
+- (void) endTimer;
+
+-(void) userHasStarted;
+
+-(void) userHasFinished;
+
 @end

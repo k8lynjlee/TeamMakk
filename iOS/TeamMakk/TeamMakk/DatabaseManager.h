@@ -25,4 +25,6 @@
 
 -(BOOL) addDefaultGoals;
 
+-(int) getCurrentActivityWithWorkoutIndex:(int)currActivity;
+
 @end

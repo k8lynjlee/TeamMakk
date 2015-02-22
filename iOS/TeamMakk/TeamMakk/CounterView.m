@@ -16,6 +16,7 @@
   UIView *_fillView;
   NSTimer *_t;
   NSDate *_start;
+  UILabel *_activateLayer;
 }
 @property (nonatomic, strong) UILabel *exerciseLabel;
 @property (nonatomic, strong) UILabel *countLabel;
@@ -114,13 +115,46 @@
 //  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
   self.layer.cornerRadius = 32.0f;
   [self addSubview:self.exerciseLabel];
-//  [self startTimer];
+
+  _activateLayer = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 2 - 20, self.frame.size.width, 30)];
+  _activateLayer.text = @"Activate";
+  _activateLayer.font = [UIFont systemFontOfSize:40];
+  [_activateLayer sizeToFit];
+  CGRect activateFrame = _activateLayer.frame;
+  activateFrame.origin.x = (self.frame.size.width - _activateLayer.frame.size.width)/2;
+  //activateFrame.origin.y =  _activateLayer.frame.size.height ;
+  _activateLayer.frame = activateFrame;
+  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
+  self.layer.cornerRadius = 32.0f;
+  [self addSubview:_activateLayer];
+  
+  self.countLabel.alpha = 0.0;
+  self.exerciseLabel.alpha = 0.0;
+  self.goalLabel.alpha = 0.0;
 }
 
 - (void) startTimer {
   self.isCounter = NO;
   _start = [NSDate date];
   _t = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseTime) userInfo:nil repeats:YES];
+}
+
+-(void) userHasStarted
+{
+  self.countLabel.alpha = 1.0;
+  self.exerciseLabel.alpha = 1.0;
+  self.goalLabel.alpha = 1.0;
+  _activateLayer.alpha = 0.0;
+  self.backgroundColor = [UIColor redColor];
+}
+
+-(void) userHasFinished
+{
+  self.countLabel.alpha = 0.0;
+  self.exerciseLabel.alpha = 0.0;
+  self.goalLabel.alpha = 0.0;
+  _activateLayer.alpha = 1.0;
+  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
 }
 
 - (void)startCounter {
@@ -137,7 +171,7 @@
     formatter.allowedUnits = NSCalendarUnitMinute |  NSCalendarUnitSecond;
     formatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
     NSString *string = [formatter stringFromTimeInterval:elapsed];
-    NSLog(@"%@", string);
+//    NSLog(@"%@", string);
     
     self.countLabel.text = [NSString stringWithFormat:@"%@", string];
     NSLog(@"%@",self.countLabel.text);
@@ -151,10 +185,10 @@
 
 - (void)endTimer {
   [_t invalidate];
-  NSTimeInterval zero = 0;
+  _t = nil;
   
   [UIView animateWithDuration:0.5 animations:^{
-    self.countLabel.text = [[NSDateComponentsFormatter new] stringFromTimeInterval:zero];
+    self.countLabel.text = @"";
     [self.countLabel sizeToFit];
     CGRect frame = self.countLabel.frame;
     frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 6, _originalFrame.origin.y);
@@ -198,6 +232,10 @@
 -(void) setTitle:(NSString *)newTitle
 {
   self.exerciseLabel.text = newTitle;
+  [self.exerciseLabel sizeToFit];
+  CGRect positionFrame = self.exerciseLabel.frame;
+  positionFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - positionFrame.size.width)/2;
+  self.exerciseLabel.frame = positionFrame;
 }
 
 -(void) setGoal:(int) newGoal
