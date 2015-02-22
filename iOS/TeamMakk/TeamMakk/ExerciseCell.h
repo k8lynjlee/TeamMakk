@@ -12,6 +12,7 @@
 @interface ExerciseCell : UITableViewCell <JBLineChartViewDataSource, JBLineChartViewDelegate>
 @property (nonatomic, strong) UILabel *exerciseLabel;
 @property (nonatomic, strong) NSString *exerciseString;
+@property (nonatomic) NSInteger exerciseIndex;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier

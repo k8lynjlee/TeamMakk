@@ -10,6 +10,7 @@
 #import "JBLineChartFooterView.h"
 #import "JBLineChartScaleView.h"
 #import "DatabaseManager.h"
+#import "WorkoutPointObject.h"
 
 const float JBCellPadding = 20.0f;
 
@@ -146,12 +147,40 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-  if (horizontalIndex == 6)
-  {
-    //Get the actual data from today from the database manager
-    return [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: exerciseNum];
+  
+  NSMutableArray *data = [[DatabaseManager getSharedInstance] fetchExercisesWithExerciseNum:(int)self.exerciseIndex];
+  
+  if ((int)data.count >= 7) {
+    WorkoutPointObject *obj = [data objectAtIndex:(data.count-1 - lineIndex)];
+    return [obj getValue];
+  } else { // there are less than 7 entries.
+    
+    // case 1: this line index is too early for the entries. if there are 4 objects and this is index 2... 7 - lineindex 2 = 5, and 7 - lineindex > objects
+    if (7 - lineIndex <= (int)data.count) {
+      int index = (int)lineIndex - (int)data.count + 1;
+      WorkoutPointObject *obj = [data objectAtIndex:index];
+      return [obj getValue];
+      // 4 objects, index 3 onward are ok, starting with 0. 4 is 1,
+      // 3 - 0, 4 - 1, 5 - 2, 6 - 3.
+    }
+    
+    return 0;
+
+    // if there are 2 objects and we're at index 3: 7 - 3 = 4 > 2
+    // case 2: this line index should have data. 4 objects, index 5.
+    
+
   }
-  return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
+//  
+//  for (int i = (int)data.count; i >= 0; i--) {
+//    
+//  }
+//  if (horizontalIndex == 6)
+//  {
+//    //Get the actual data from today from the database manager
+//    return [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: exerciseNum];
+//  }
+//  return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
 }
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView widthForLineAtLineIndex:(NSUInteger)lineIndex

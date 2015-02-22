@@ -15,7 +15,7 @@
   NSString * _dataTime;
 }
 
--(instancetype) initWithExercise:(NSString *)exerciseNum
+- (instancetype) initWithExercise:(NSString *)exerciseNum
                   number:(NSString *)number
                     date:(NSString *)dataTime
 {
@@ -24,6 +24,10 @@
   _dataTime = dataTime;
   
   return self;
+}
+
+- (int) getValue {
+  return _number.intValue;
 }
 
 @end
