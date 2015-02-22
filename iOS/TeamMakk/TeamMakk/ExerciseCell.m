@@ -9,6 +9,7 @@
 #import "ExerciseCell.h"
 #import "JBLineChartFooterView.h"
 #import "JBLineChartScaleView.h"
+#import "DatabaseManager.h"
 
 const float JBCellPadding = 20.0f;
 
@@ -140,6 +141,11 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
+  if (horizontalIndex == 6)
+  {
+    //Get the actual data from today from the database manager
+    [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: 0];
+  }
   return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
 }
 

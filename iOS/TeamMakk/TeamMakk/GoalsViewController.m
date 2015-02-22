@@ -93,7 +93,6 @@
   [self.view addSubview:_mainSwitcher];
   
   _progressRing = [[M13ProgressViewRing alloc] initWithFrame:CGRectMake(60, 140, 250, 250)];
-  [_progressRing setProgress:((double)numCurrentValues / firstGoal) animated:YES];
   _progressRing.showPercentage = YES;
   _progressRing.primaryColor = [UIColor orangeColor];
   _progressRing.secondaryColor = [UIColor redColor];
@@ -138,7 +137,11 @@
   _currentTallyNum = [[UILabel alloc] initWithFrame:CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width - 5, 380, 200, 160)];
   _currentTallyNum.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:40.0];
   _currentTallyNum.textColor = [UIColor grayColor];
-  _currentTallyNum.text = @"3";
+  
+  numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex:0];
+    [_progressRing setProgress:((double)numCurrentValues / firstGoal) animated:YES];
+  
+  _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
   //[_currentTallyNum sizeToFit];
   
  // _currentTallyText.frame = CGRectMake((screenWidth - _currentTallyText.frame.size.width - _currentTallyNum.frame.size.width)/2, 400, 100, 100);
@@ -240,6 +243,11 @@
   
   _dailyGoalNum.text = [NSString stringWithFormat:@"%i", ((WorkoutGoalObject *)(_goals[_mainSwitcher.selectedSegmentIndex])).number];
   //[_dailyGoalNum sizeToFit];
+  
+  numCurrentValues = [[DatabaseManager getSharedInstance]getCurrentActivityWithWorkoutIndex:_mainSwitcher.selectedSegmentIndex];
+  
+  _currentTallyNum.text = [NSString stringWithFormat:@"%i", numCurrentValues];
+  
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
 }
 
