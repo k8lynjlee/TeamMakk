@@ -137,14 +137,14 @@ static NSString* kGoalsDatabaseName = @"Goals";
       [insertSQL appendFormat: @"\"%i\"", exerciseNum];
       [insertSQL appendString: @","];
       [insertSQL appendFormat: @"\"%i\"", numReps];
-      [insertSQL appendString: @","];
+      [insertSQL appendString: @",\""];
     
       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
       dateFormatter.dateFormat = @"MM/dd/yy, hh:mm a:ss";
       NSString *resultString = [dateFormatter stringFromDate: date];
       
       [insertSQL appendString:resultString];
-      [insertSQL appendString:@")"];
+      [insertSQL appendString:@"\")"];
     
       const char *insert_stmt = [insertSQL UTF8String];
       sqlite3_prepare_v2(database, insert_stmt,-1, &statement, NULL);

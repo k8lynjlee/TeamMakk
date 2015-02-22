@@ -132,7 +132,7 @@
       currentWorkoutNumber = 1;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[0])).number];
       
     } else if (value == 2)
     {
@@ -140,14 +140,14 @@
       currentWorkoutNumber = 2;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[1])).number];
     } else if (value == 3)
     {
       //L Plank
       currentWorkoutNumber = 3;
       
       //Send goal to the arduino
-      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[3])).number];
+      [self sendNumberToArduino:((WorkoutGoalObject *)(_goalNumbers[2])).number];
     } else if (value == 4){
       //Situp
       currentWorkoutNumber = 4;

@@ -65,6 +65,8 @@
   _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Pushups"];
   
   [self.view addSubview:_counterView];
+  
+  [[BluetoothShieldHelper sharedShieldHelper] setListener:self];
 }
 
 - (void)updateCounter {

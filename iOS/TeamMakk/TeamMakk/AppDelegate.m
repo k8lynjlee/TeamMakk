@@ -12,6 +12,7 @@
 #import "SummaryTableViewController.h"
 #import "WorkoutViewController.h"
 #import <HealthKit/HealthKit.h>
+#import "DatabaseManager.h"
 
 @interface AppDelegate () {
   UINavigationController *_navigationController;  // The main navigation controller for the app.
@@ -93,7 +94,7 @@
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
   //Create a timer to poll until the bluetooth works
-    [[BluetoothShieldHelper sharedShieldHelper] setListener:nil];
+  [[BluetoothShieldHelper sharedShieldHelper] setListener:nil];
   [self performSelector:@selector(connectBluetooth) withObject:self afterDelay:2.0];
 }
 
