@@ -25,7 +25,7 @@
 
 -(void) setListener: (id<BluetoothListenerDelegate>) newListener;
 
--(void) sendControlMessage;
+-(void) sendControlMessage :(NSArray *)goals;
 
 //Scan for bluetooth device. Connect to the first one
 -(void) initDevice;

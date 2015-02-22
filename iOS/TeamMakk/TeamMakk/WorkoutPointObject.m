@@ -10,13 +10,13 @@
 
 @implementation WorkoutPointObject
 {
-  int _exerciseNum;
-  int _number;
+  NSString * _exerciseNum;
+  NSString * _number;
   NSString * _dataTime;
 }
 
--(instancetype) initWithExercise:(int)exerciseNum
-                  number:(int)number
+-(instancetype) initWithExercise:(NSString *)exerciseNum
+                  number:(NSString *)number
                     date:(NSString *)dataTime
 {
   _exerciseNum = exerciseNum;

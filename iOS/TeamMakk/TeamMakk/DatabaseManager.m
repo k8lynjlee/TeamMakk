@@ -137,14 +137,14 @@ static NSString* kGoalsDatabaseName = @"Goals";
       [insertSQL appendFormat: @"\"%i\"", exerciseNum];
       [insertSQL appendString: @","];
       [insertSQL appendFormat: @"\"%i\"", numReps];
-      [insertSQL appendString: @","];
+      [insertSQL appendString: @",\""];
     
       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
       dateFormatter.dateFormat = @"MM/dd/yy, hh:mm a:ss";
       NSString *resultString = [dateFormatter stringFromDate: date];
       
       [insertSQL appendString:resultString];
-      [insertSQL appendString:@")"];
+      [insertSQL appendString:@"\")"];
     
       const char *insert_stmt = [insertSQL UTF8String];
       sqlite3_prepare_v2(database, insert_stmt,-1, &statement, NULL);
@@ -203,12 +203,14 @@ static NSString* kGoalsDatabaseName = @"Goals";
     {
       while (sqlite3_step(statement) == SQLITE_ROW)
       {
-        int exercise = (int)sqlite3_column_text(statement, 0);
-        int number = (int)sqlite3_column_text(statement, 1);
+        NSString * exercise = [[NSString alloc] initWithUTF8String:
+                        (const char *) sqlite3_column_text(statement, 0)];
+        NSString * number = [[NSString alloc] initWithUTF8String:
+                      (const char *) sqlite3_column_text(statement, 1)];
         NSString *dataTime = [[NSString alloc] initWithUTF8String:
                               (const char *) sqlite3_column_text(statement, 2)];
         
-        [resultArray addObject:[[WorkoutPointObject alloc] initWithExercise:exerciseNum
+        [resultArray addObject:[[WorkoutPointObject alloc] initWithExercise:exercise
                                                                     number:number
                                                                      date: dataTime]];
       }

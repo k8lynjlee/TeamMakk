@@ -10,8 +10,8 @@
 
 @interface WorkoutPointObject : NSObject
 
--(instancetype) initWithExercise:(int)exerciseNum
-                  number:(int)number
-                    date:(NSString *)dataTime;
+-(instancetype) initWithExercise:(NSString *)exerciseNum
+                  number:(NSString *)number
+                    date:(NSString *)dateTime;
 
 @end

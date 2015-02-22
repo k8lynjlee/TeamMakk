@@ -77,7 +77,7 @@
   [self addSubview:_fillView];
   
   self.goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
-  self.goalLabel.text = @"/30";
+  self.goalLabel.text = @"/--";
   self.goalLabel.font = [UIFont systemFontOfSize:70];
   [self.goalLabel sizeToFit];
   CGRect goalFrame = self.goalLabel.frame;
@@ -143,6 +143,21 @@
     [self updateFill];
   }];
 
+}
+
+-(void) setTitle:(NSString *)newTitle
+{
+  self.exerciseLabel.text = newTitle;
+}
+
+-(void) setGoal:(int) newGoal
+{
+  if (newGoal == 0)
+  {
+    self.goalLabel.text = [NSString stringWithFormat:@"--"];
+  } else {
+    self.goalLabel.text = [NSString stringWithFormat:@"/%i", newGoal];
+  }
 }
 
 - (void)updateFill {

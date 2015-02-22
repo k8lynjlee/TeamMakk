@@ -11,5 +11,11 @@
 @interface CounterView : UIView
 - (id)initWithFrame:(CGRect)frame
            exercise:(NSString *)exercise;
+
 - (void)increaseCount;
+
+-(void) setTitle:(NSString *)newTitle;
+
+-(void) setGoal:(int) newGoal;
+
 @end
