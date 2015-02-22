@@ -14,4 +14,6 @@
 @property (nonatomic, readonly) UILabel *zeroLabel;
 @property (nonatomic, readonly) NSMutableArray *labels;
 @property (nonatomic, readonly) UILabel *topLabel;
+
+- (void)setMaxValue:(NSNumber *)max;
 @end

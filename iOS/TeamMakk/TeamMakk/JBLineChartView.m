@@ -33,6 +33,7 @@ NSInteger static const kJBLineChartDotsViewUnselectedLineIndex = -1;
 
 // Numerics (JBLineSelectionView)
 CGFloat static const kJBLineSelectionViewWidth = 20.0f;
+//CGFloat static const kJBLineSelectionViewWidth = 1.0f;
 
 // Numerics (JBLineChartView)
 CGFloat static const kJBBarChartViewUndefinedCachedHeight = -1.0f;
@@ -156,10 +157,10 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 @property (nonatomic, strong) NSArray *chartData;
 @property (nonatomic, strong) JBLineChartLinesView *linesView;
 @property (nonatomic, strong) JBLineChartDotsView *dotsView;
-@property (nonatomic, strong) JBChartVerticalSelectionView *verticalSelectionView;
+@property (nonatomic, strong) UIView *horizontalSelectionView;
 @property (nonatomic, assign) CGFloat cachedMaxHeight;
 @property (nonatomic, assign) CGFloat cachedMinHeight;
-@property (nonatomic, assign) BOOL verticalSelectionViewVisible;
+@property (nonatomic, assign) BOOL horizontalSelectionViewVisible;
 
 // Initialization
 - (void)construct;
@@ -180,7 +181,7 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 - (void)touchesEndedOrCancelledWithTouches:(NSSet *)touches;
 
 // Setters
-- (void)setVerticalSelectionViewVisible:(BOOL)verticalSelectionViewVisible animated:(BOOL)animated;
+- (void)setHorizontalSelectionViewVisible:(BOOL)verticalSelectionViewVisible animated:(BOOL)animated;
 
 @end
 
@@ -194,10 +195,10 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 	{
 		kJBLineChartViewDefaultLineColor = [UIColor blackColor];
         kJBLineChartViewDefaultLineFillColor = [UIColor clearColor];
-		kJBLineChartViewDefaultLineSelectionColor = [UIColor whiteColor];
+        kJBLineChartViewDefaultLineSelectionColor = [UIColor blackColor];
         kJBLineChartViewDefaultLineSelectionFillColor = [UIColor clearColor];
         kJBLineChartViewDefaultDotColor = [UIColor blackColor];
-        kJBLineChartViewDefaultDotSelectionColor = [UIColor whiteColor];
+        kJBLineChartViewDefaultDotSelectionColor = [UIColor blackColor];
 	}
 }
 
@@ -351,52 +352,99 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
     /*
      * Creates a vertical selection view for touch events
      */
-    dispatch_block_t createSelectionView = ^{
-        if (self.verticalSelectionView)
-        {
-            [self.verticalSelectionView removeFromSuperview];
-            self.verticalSelectionView = nil;
-        }
+//    dispatch_block_t createSelectionView = ^{
+//        if (self.horizontalSelectionView)
+//        {
+//            [self.horizontalSelectionView removeFromSuperview];
+//            self.horizontalSelectionView = nil;
+//        }
+//
+//        CGFloat selectionViewWidth = kJBLineSelectionViewWidth;
+//        if ([self.delegate respondsToSelector:@selector(verticalSelectionWidthForLineChartView:)])
+//        {
+//            selectionViewWidth = MIN([self.delegate verticalSelectionWidthForLineChartView:self], self.bounds.size.width);
+//        }
+//        
+//        CGFloat verticalSelectionViewHeight = self.bounds.size.height - self.headerView.frame.size.height - self.footerView.frame.size.height - self.headerPadding - self.footerPadding;
+//        
+//        if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoHeaderPaddingForChartView:)])
+//        {
+//            if ([self.dataSource shouldExtendSelectionViewIntoHeaderPaddingForChartView:self])
+//            {
+//                verticalSelectionViewHeight += self.headerPadding;
+//            }
+//        }
+//        
+//        if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoFooterPaddingForChartView:)])
+//        {
+//            if ([self.dataSource shouldExtendSelectionViewIntoFooterPaddingForChartView:self])
+//            {
+//                verticalSelectionViewHeight += self.footerPadding;
+//            }
+//        }
+//
+//        self.horizontalSelectionView = [[JBChartVerticalSelectionView alloc] initWithFrame:CGRectMake(0, 0, selectionViewWidth, verticalSelectionViewHeight)];
+//        self.horizontalSelectionView.alpha = 0.0;
+//        self.horizontalSelectionView.hidden = !self.showsVerticalSelection;
+//
+//        // Add new selection bar
+//        if (self.footerView)
+//        {
+//            [self insertSubview:self.horizontalSelectionView belowSubview:self.footerView];
+//        }
+//        else
+//        {
+//            [self addSubview:self.horizontalSelectionView];
+//        }
+//    };
 
-        CGFloat selectionViewWidth = kJBLineSelectionViewWidth;
-        if ([self.delegate respondsToSelector:@selector(verticalSelectionWidthForLineChartView:)])
-        {
-            selectionViewWidth = MIN([self.delegate verticalSelectionWidthForLineChartView:self], self.bounds.size.width);
-        }
-        
-        CGFloat verticalSelectionViewHeight = self.bounds.size.height - self.headerView.frame.size.height - self.footerView.frame.size.height - self.headerPadding - self.footerPadding;
-        
-        if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoHeaderPaddingForChartView:)])
-        {
-            if ([self.dataSource shouldExtendSelectionViewIntoHeaderPaddingForChartView:self])
-            {
-                verticalSelectionViewHeight += self.headerPadding;
-            }
-        }
-        
-        if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoFooterPaddingForChartView:)])
-        {
-            if ([self.dataSource shouldExtendSelectionViewIntoFooterPaddingForChartView:self])
-            {
-                verticalSelectionViewHeight += self.footerPadding;
-            }
-        }
-
-        self.verticalSelectionView = [[JBChartVerticalSelectionView alloc] initWithFrame:CGRectMake(0, 0, selectionViewWidth, verticalSelectionViewHeight)];
-        self.verticalSelectionView.alpha = 0.0;
-        self.verticalSelectionView.hidden = !self.showsVerticalSelection;
-
-        // Add new selection bar
-        if (self.footerView)
-        {
-            [self insertSubview:self.verticalSelectionView belowSubview:self.footerView];
-        }
-        else
-        {
-            [self addSubview:self.verticalSelectionView];
-        }
-    };
-
+  dispatch_block_t createSelectionView = ^{
+    if (self.horizontalSelectionView)
+    {
+      [self.horizontalSelectionView removeFromSuperview];
+      self.horizontalSelectionView = nil;
+    }
+    
+    CGFloat selectionViewWidth = self.frame.size.width;// kJBLineSelectionViewWidth;
+//    if ([self.delegate respondsToSelector:@selector(verticalSelectionWidthForLineChartView:)])
+//    {
+//      selectionViewWidth = MIN([self.delegate verticalSelectionWidthForLineChartView:self], self.bounds.size.width);
+//    }
+    
+    CGFloat verticalSelectionViewHeight = 1.0f;//self.bounds.size.height - self.headerView.frame.size.height - self.footerView.frame.size.height - self.headerPadding - self.footerPadding;
+//    
+//    if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoHeaderPaddingForChartView:)])
+//    {
+//      if ([self.dataSource shouldExtendSelectionViewIntoHeaderPaddingForChartView:self])
+//      {
+//        verticalSelectionViewHeight += self.headerPadding;
+//      }
+//    }
+//    
+//    if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoFooterPaddingForChartView:)])
+//    {
+//      if ([self.dataSource shouldExtendSelectionViewIntoFooterPaddingForChartView:self])
+//      {
+//        verticalSelectionViewHeight += self.footerPadding;
+//      }
+//    }
+    
+    self.horizontalSelectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, selectionViewWidth, verticalSelectionViewHeight)];
+//        self.horizontalSelectionView = [[JBChartVerticalSelectionView alloc] initWithFrame:CGRectMake(0, 0, selectionViewWidth, verticalSelectionViewHeight)];
+    self.horizontalSelectionView.alpha = 0.0;
+    self.horizontalSelectionView.hidden = !self.showsVerticalSelection;
+    
+    // Add new selection bar
+    if (self.footerView)
+    {
+      [self insertSubview:self.horizontalSelectionView belowSubview:self.footerView];
+    }
+    else
+    {
+      [self addSubview:self.horizontalSelectionView];
+    }
+  };
+  
     createChartData();
     createLineGraphView();
     createDotGraphView();
@@ -958,17 +1006,17 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
         [self.delegate lineChartView:self didSelectLineAtIndex:lineIndex horizontalIndex:[self horizontalIndexForPoint:touchPoint indexClamp:JBLineChartHorizontalIndexClampNone lineData:[self.chartData objectAtIndex:lineIndex]]];
     }
     
-    if ([self.delegate respondsToSelector:@selector(lineChartView:verticalSelectionColorForLineAtLineIndex:)])
+    if ([self.delegate respondsToSelector:@selector(lineChartView:horizontalSelectionColorForLineAtLineIndex:)])
     {
-        UIColor *verticalSelectionColor = [self.delegate lineChartView:self verticalSelectionColorForLineAtLineIndex:lineIndex];
-        NSAssert(verticalSelectionColor != nil, @"JBLineChartView // delegate function - (UIColor *)lineChartView:(JBLineChartView *)lineChartView verticalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex must return a non-nil UIColor");
-        self.verticalSelectionView.bgColor = verticalSelectionColor;
+        UIColor *horizontalSelectionColor = [self.delegate lineChartView:self horizontalSelectionColorForLineAtLineIndex:lineIndex];
+        NSAssert(horizontalSelectionColor != nil, @"JBLineChartView // delegate function - (UIColor *)lineChartView:(JBLineChartView *)lineChartView verticalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex must return a non-nil UIColor");
+        self.horizontalSelectionView.backgroundColor = horizontalSelectionColor;
     }
+  
     
-    
-    CGFloat xOffset = fmin(self.bounds.size.width - self.verticalSelectionView.frame.size.width, fmax(0, touchPoint.x - (ceil(self.verticalSelectionView.frame.size.width * 0.5))));
-    CGFloat yOffset = self.headerView.frame.size.height + self.headerPadding;
-    
+    CGFloat xOffset = fmin(self.bounds.size.width - self.horizontalSelectionView.frame.size.width, fmax(0, touchPoint.x - (ceil(self.horizontalSelectionView.frame.size.width * 0.5))));
+  CGFloat yOffset = touchPoint.y;
+  
     if ([self.dataSource respondsToSelector:@selector(shouldExtendSelectionViewIntoHeaderPaddingForChartView:)])
     {
         if ([self.dataSource shouldExtendSelectionViewIntoHeaderPaddingForChartView:self])
@@ -977,8 +1025,8 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
         }
     }
     
-    self.verticalSelectionView.frame = CGRectMake(xOffset, yOffset, self.verticalSelectionView.frame.size.width, self.verticalSelectionView.frame.size.height);
-    [self setVerticalSelectionViewVisible:YES animated:YES];
+    self.horizontalSelectionView.frame = CGRectMake(xOffset, yOffset, self.horizontalSelectionView.frame.size.width, self.horizontalSelectionView.frame.size.height);
+    [self setHorizontalSelectionViewVisible:YES animated:YES];
 }
 
 - (void)touchesEndedOrCancelledWithTouches:(NSSet *)touches
@@ -988,7 +1036,7 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
         return;
     }
 
-    [self setVerticalSelectionViewVisible:NO animated:YES];
+    [self setHorizontalSelectionViewVisible:NO animated:YES];
     
     if ([self.delegate respondsToSelector:@selector(didDeselectLineInLineChartView:)])
     {
@@ -1004,31 +1052,31 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 
 #pragma mark - Setters
 
-- (void)setVerticalSelectionViewVisible:(BOOL)verticalSelectionViewVisible animated:(BOOL)animated
+- (void)setHorizontalSelectionViewVisible:(BOOL)verticalSelectionViewVisible animated:(BOOL)animated
 {
-    _verticalSelectionViewVisible = verticalSelectionViewVisible;
+    _horizontalSelectionViewVisible = verticalSelectionViewVisible;
 
     if (animated)
     {
         [UIView animateWithDuration:kJBChartViewDefaultAnimationDuration delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            self.verticalSelectionView.alpha = self.verticalSelectionViewVisible ? 1.0 : 0.0;
+            self.horizontalSelectionView.alpha = self.horizontalSelectionViewVisible ? 1.0 : 0.0;
         } completion:nil];
     }
     else
     {
-        self.verticalSelectionView.alpha = _verticalSelectionViewVisible ? 1.0 : 0.0;
+        self.horizontalSelectionView.alpha = _horizontalSelectionViewVisible ? 1.0 : 0.0;
     }
 }
 
-- (void)setVerticalSelectionViewVisible:(BOOL)verticalSelectionViewVisible
+- (void)setHorizontalSelectionViewVisible:(BOOL)verticalSelectionViewVisible
 {
-    [self setVerticalSelectionViewVisible:verticalSelectionViewVisible animated:NO];
+    [self setHorizontalSelectionViewVisible:verticalSelectionViewVisible animated:NO];
 }
 
 - (void)setShowsVerticalSelection:(BOOL)showsVerticalSelection
 {
     _showsVerticalSelection = showsVerticalSelection;
-    self.verticalSelectionView.hidden = _showsVerticalSelection ? NO : YES;
+    self.horizontalSelectionView.hidden = _showsVerticalSelection ? NO : YES;
 }
 
 #pragma mark - Gestures

@@ -69,7 +69,7 @@
     UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:tabItemTitles[i] image:tabItemImages[i] selectedImage:tabItemImages[i]];
     viewController.tabBarItem = tabBarItem;
   }
-//  _mainViewController.tabBar.tintColor = [UIColor blueColor];
+  _mainViewController.tabBar.tintColor = [UIColor redColor];
 //  _mainViewController.tabBar.barTintColor = [UIColor colorWithWhite:0.2 alpha:1.0];
   _mainViewController.viewControllers = viewControllers;
 }

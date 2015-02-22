@@ -237,7 +237,7 @@ typedef NS_ENUM(NSInteger, JBLineChartViewLineStyle){
  *
  *  @return The color of the selection view used during chart selections of the given line.
  */
-- (UIColor *)lineChartView:(JBLineChartView *)lineChartView verticalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex;
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView horizontalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex;
 
 /**
  *  Returns the selection color to be overlayed on a line within the chart during touch events.

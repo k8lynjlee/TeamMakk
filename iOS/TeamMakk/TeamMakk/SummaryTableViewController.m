@@ -242,6 +242,7 @@
    ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row]];
   CGRect frame = CGRectMake(5, 5, self.tableView.frame.size.width - 10, (self.tableView.frame.size.height)/3.0 - 5);
   cell.frame = frame;
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   [cell layoutCellComponents];
     
   return cell;
