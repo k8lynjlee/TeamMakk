@@ -10,4 +10,6 @@
 
 @interface GoalsViewController : UIViewController < UITextFieldDelegate>
 
+-(void) stepperPressed;
+
 @end
