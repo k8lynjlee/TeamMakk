@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-
+@class HKHealthStore;
 @interface DatabaseManager : NSObject
+
+@property (nonatomic) HKHealthStore *healthStore;
 
 +(DatabaseManager *)getSharedInstance;
 

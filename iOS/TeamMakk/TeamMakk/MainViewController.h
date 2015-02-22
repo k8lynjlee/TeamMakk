@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-//@class HKHealthStore;
+
 
 @interface MainViewController : UITabBarController
-//@property (nonatomic) HKHealthStore *healthStore;
+
 
 @end
 

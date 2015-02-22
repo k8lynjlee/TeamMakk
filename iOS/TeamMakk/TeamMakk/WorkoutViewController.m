@@ -11,6 +11,8 @@
 #import "DatabaseManager.h"
 #import "WorkoutGoalObject.h"
 
+
+
 @interface WorkoutViewController () {
   CounterView *_counterView;
   
@@ -79,6 +81,11 @@
   [self.view addSubview:_counterView];
   
   [[BluetoothShieldHelper sharedShieldHelper] setListener:self];
+  
+
+
+  
+  
 }
 
 - (void)updateCounter {

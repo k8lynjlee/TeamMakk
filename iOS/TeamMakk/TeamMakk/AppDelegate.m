@@ -11,7 +11,6 @@
 #import "GoalsViewController.h"
 #import "SummaryTableViewController.h"
 #import "WorkoutViewController.h"
-#import <HealthKit/HealthKit.h>
 #import "DatabaseManager.h"
 #import "SummaryTableViewController.h"
 
