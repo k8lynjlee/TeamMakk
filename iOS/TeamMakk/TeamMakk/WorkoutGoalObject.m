@@ -32,4 +32,9 @@
 {
   return _number;
 }
+
+-(void) setNumber :(int) newValue
+{
+  _number = newValue;
+}
 @end

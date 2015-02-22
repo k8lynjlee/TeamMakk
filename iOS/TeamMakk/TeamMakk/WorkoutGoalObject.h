@@ -15,5 +15,6 @@
 
 -(int) exerciseNum;
 -(int) number;
+-(void) setNumber: (int) newValue;
 
 @end
