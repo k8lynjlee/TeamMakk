@@ -100,10 +100,12 @@
     //R Plank
     _workoutLabel.text = @"R Plank";
     [_counterView setTitle:@"R Plank"];
+    [_counterView startTimer];
   } else if (workoutNumber == 3) {
     //L Plank
     _workoutLabel.text = @"L Plank";
     [_counterView setTitle:@"L Plank"];
+    [_counterView startTimer];
   } else if (workoutNumber == 4){
     //Situp
     _workoutLabel.text = @"Situp";
@@ -125,7 +127,9 @@
 -(void) didReceiveWorkoutNumberUpdate: (int) workoutUpdate
 {
   _counterLabel.text = [NSString stringWithFormat:@"%i", workoutUpdate];
-  [self updateCounter];
+  if (_counterView.isCounter) {
+    [self updateCounter];
+  }
   numWorkout = workoutUpdate;
 }
 

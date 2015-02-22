@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface CounterView : UIView
+@property (nonatomic) BOOL isCounter;
 - (id)initWithFrame:(CGRect)frame
            exercise:(NSString *)exercise;
 
 - (void)increaseCount;
 
--(void) setTitle:(NSString *)newTitle;
+- (void) setTitle:(NSString *)newTitle;
 
--(void) setGoal:(int) newGoal;
+- (void) setGoal:(int) newGoal;
+
+- (void) startTimer;
 
 @end

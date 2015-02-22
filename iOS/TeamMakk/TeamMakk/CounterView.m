@@ -14,6 +14,8 @@
   CGRect _originalFrame;
   CALayer *_fillLayer;
   UIView *_fillView;
+  NSTimer *_t;
+  NSDate *_start;
 }
 @property (nonatomic, strong) UILabel *exerciseLabel;
 @property (nonatomic, strong) UILabel *countLabel;
@@ -30,6 +32,7 @@
   self = [super initWithFrame:frame];
   if (self) {
     self.exerciseString = exercise;
+    self.isCounter = YES;
     [self setUpView];
   }
   return self;
@@ -107,12 +110,47 @@
   self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
   self.layer.cornerRadius = 32.0f;
   [self addSubview:self.exerciseLabel];
-  
-
 }
 
-- (void)increaseCount
-{
+- (void) startTimer {
+  self.isCounter = NO;
+  _start = [NSDate date];
+  _t = [[NSTimer alloc] initWithFireDate:_start
+                               interval:1
+                                 target:self
+                               selector:@selector(increaseTime)
+                                userInfo:nil
+                                repeats:YES];
+}
+
+- (void)startCounter {
+  _current = 0;
+  self.isCounter = YES;
+}
+
+- (void)increaseTime {
+  NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:_start];
+    self.countLabel.alpha = 0;
+  
+  [UIView animateWithDuration:0.5 animations:^{
+  self.countLabel.text = [[NSDateComponentsFormatter new] stringFromTimeInterval:elapsed];
+    [self.countLabel sizeToFit];
+      self.countLabel.alpha = 1;
+  }];
+}
+
+- (void)endTimer {
+  [_t invalidate];
+  NSTimeInterval zero = 0;
+  
+  [UIView animateWithDuration:0.5 animations:^{
+    self.countLabel.text = [[NSDateComponentsFormatter new] stringFromTimeInterval:zero];
+    [self.countLabel sizeToFit];
+    self.countLabel.alpha = 1;
+  }];
+}
+
+- (void)increaseCount {
   _current++;
   self.countLabel.alpha = 0;
   
@@ -142,7 +180,6 @@
     }
     [self updateFill];
   }];
-
 }
 
 -(void) setTitle:(NSString *)newTitle
@@ -162,7 +199,7 @@
 
 - (void)updateFill {
   float progress = (float)_current/_goal;
-  CGFloat radius = 32.0;
+//  CGFloat radius = 32.0;
   CGPoint startFill = CGPointMake(0, self.frame.size.height - progress*self.frame.size.height);
   CGRect frame = CGRectMake(startFill.x, startFill.y, self.frame.size.width, progress*self.frame.size.height);
   _fillView.frame = frame;
