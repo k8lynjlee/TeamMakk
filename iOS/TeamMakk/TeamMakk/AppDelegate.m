@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "GoalsTableViewController.h"
+#import "GoalsViewController.h"
 #import "SummaryTableViewController.h"
 #import "WorkoutViewController.h"
 #import <HealthKit/HealthKit.h>
@@ -53,7 +53,7 @@
 {
   // Instantiate our view controllers.
   SummaryTableViewController *summaryVC = [[SummaryTableViewController alloc] init];
-  GoalsTableViewController *goalsVC = [[GoalsTableViewController alloc] init];
+  GoalsViewController *goalsVC = [[GoalsViewController alloc] init];
   WorkoutViewController *workoutVC = [[WorkoutViewController alloc] init];
   
   // Configure our tabs.

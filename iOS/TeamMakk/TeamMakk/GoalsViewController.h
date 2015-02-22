@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GoalsTableViewController : UITableViewController
+@interface GoalsViewController : UIViewController
 
 @end
