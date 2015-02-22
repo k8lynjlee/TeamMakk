@@ -29,6 +29,9 @@
   int numCurrentValues;
   
   UITapGestureRecognizer *tap;
+  UITapGestureRecognizer *touchTap;
+  
+  UIView* touchView;
 }
 
 @end
@@ -68,9 +71,14 @@
   
   numCurrentValues = 3;
   
+  CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+  
   _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Right Plank",  @"Left Plank", @"Situps"]];
   _mainSwitcher.frame = CGRectMake(0, 40, 100, 100);
   _mainSwitcher.selectedSegmentIndex = 0;
+  [_mainSwitcher sizeToFit];
+  
+  _mainSwitcher.frame = CGRectMake((screenWidth - _mainSwitcher.frame.size.width)/2, 60, 100, 100);
   [_mainSwitcher sizeToFit];
 
   [_mainSwitcher addTarget:self
@@ -86,23 +94,38 @@
   
   _dailyGoalText = [[UILabel alloc] initWithFrame:CGRectMake(100, 490, 200, 200)];
   _dailyGoalText.text = @"Daily Goal: ";
+  _dailyGoalText.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30.0];
   [_dailyGoalText sizeToFit];
   [self.view addSubview:_dailyGoalText];
   
   _dailyGoalNum = [[UITextField alloc] initWithFrame:CGRectMake(_dailyGoalText.frame.origin.x + _dailyGoalText.frame.size.width, _dailyGoalText.frame.origin.y, 100, 100)];
+  
   _dailyGoalNum.text = [NSString stringWithFormat:@"%i", firstGoal];
+  _dailyGoalNum.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30.0];
+  _dailyGoalNum.textColor = [UIColor blueColor];
   [_dailyGoalNum sizeToFit];
-  _dailyGoalNum.keyboardType = UIKeyboardTypeNumberPad;
+  _dailyGoalNum.keyboardType = UIKeyboardTypeDecimalPad;
   _dailyGoalNum.delegate = self;
   [self.view addSubview:_dailyGoalNum];
   
-  _currentTallyText = [[UILabel alloc] initWithFrame:CGRectMake(100, 440, 200, 200)];
-  _currentTallyText.text = @"Current Tally: ";
+  _currentTallyText = [[UILabel alloc] initWithFrame:CGRectMake(100, 400, 200, 200)];
+  _currentTallyText.text = @"Today: ";
+  _currentTallyText.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30.0];
   [_currentTallyText sizeToFit];
+  
+  
+  _currentTallyNum = [[UILabel alloc] initWithFrame:CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width, 400, 200, 200)];
+  _currentTallyNum.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30.0];
+  _currentTallyNum.text = @"3";
+  [_currentTallyNum sizeToFit];
+  
+  _currentTallyText.frame = CGRectMake((screenWidth - _currentTallyText.frame.size.width - _currentTallyNum.frame.size.width)/2, 400, 100, 100);
+  
   [self.view addSubview:_currentTallyText];
   
-  _currentTallyNum = [[UILabel alloc] initWithFrame:CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width, _currentTallyText.frame.origin.y, 100, 100)];
-  _currentTallyNum.text = @"3";
+  _currentTallyNum.frame = CGRectMake(_currentTallyText.frame.origin.x + _currentTallyText.frame.size.width + 10, 434, 100, 100);
+  
+ // _currentTallyNum.text = @"3";
   [_currentTallyNum sizeToFit];
   [self.view addSubview:_currentTallyNum];
   
@@ -110,32 +133,61 @@
                                  initWithTarget:self
                                  action:@selector(dismissKeyboard)];
   
-  //[self.view addGestureRecognizer:tap];
+  [self.view addGestureRecognizer:tap];
+  
+  touchView = [[UIView alloc] initWithFrame:CGRectMake(_dailyGoalNum.frame.origin.x - 10, _dailyGoalNum.frame.origin.y - 10, _dailyGoalNum.frame.size.width + 20 , _dailyGoalNum.frame.size.height + 20)];
+  touchView.backgroundColor = [UIColor blackColor];
+  touchView.alpha = 0.5;
+  
+  touchTap = [[UITapGestureRecognizer alloc]
+         initWithTarget:self
+         action:@selector(enableKeyboard)];
+  
+  [touchView addGestureRecognizer:touchTap];
+  
+  [self.view addSubview:touchView];
+
+}
+
+-(void)enableKeyboard {
+  NSLog(@"Did get touch");
+  [_dailyGoalNum becomeFirstResponder];
+  
+  //[self.view removeGestureRecognizer:tap];
 }
 
 -(void)dismissKeyboard {
-  [_dailyGoalNum endEditing:YES];
+  NSLog(@"Did get touch");
+  CGPoint location = [tap locationInView:self.view];
   
-  [self.view removeGestureRecognizer:tap];
+  //if ( abs(location.x - touchView.frame.origin.x) < touchView.frame.size.width)
+  //{
+  //  [self enableKeyboard];
+  //} else {
+  [_dailyGoalNum resignFirstResponder];
+  [_dailyGoalNum endEditing:YES];
+  //}
+  
+  //[self.view removeGestureRecognizer:tap];
 }
 
 -(void)keyboardWillShow {
   // Animate the current view out of the way
   [UIView animateWithDuration:0.3f animations:^ {
-    self.view.frame = CGRectMake(0, -160, 320, 480);
+    self.view.frame = CGRectMake(0, -100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
   }];
   
  // tap = [[UITapGestureRecognizer alloc]
  //        initWithTarget:self
  //        action:@selector(dismissKeyboard)];
   
-  [self.view addGestureRecognizer:tap];
+ // [self.view addGestureRecognizer:tap];
 }
 
 -(void)keyboardWillHide {
   // Animate the current view back to its original position
   [UIView animateWithDuration:0.3f animations:^ {
-    self.view.frame = CGRectMake(0, 0, 320, 480);
+    self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
   }];
 }
 

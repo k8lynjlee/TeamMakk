@@ -164,7 +164,7 @@
       currBufferIndex = 0;
     } else {
       NSLog(@"Unrecognized workout");
-      assert(0);
+      //assert(0);
     }
     currBufferIndex = 0;
   }
