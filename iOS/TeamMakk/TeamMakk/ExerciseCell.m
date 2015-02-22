@@ -148,7 +148,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
   
-  NSMutableArray *data = [[DatabaseManager getSharedInstance] fetchExercisesWithExerciseNum:(int)self.exerciseIndex];
+  /*NSMutableArray *data = [[DatabaseManager getSharedInstance] fetchExercisesWithExerciseNum:(int)self.exerciseIndex];
   
   if ((int)data.count >= 7) {
     WorkoutPointObject *obj = [data objectAtIndex:(data.count-1 - lineIndex)];
@@ -164,13 +164,18 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
       // 3 - 0, 4 - 1, 5 - 2, 6 - 3.
     }
     
-    return 0;
+    return 0;*/
 
     // if there are 2 objects and we're at index 3: 7 - 3 = 4 > 2
     // case 2: this line index should have data. 4 objects, index 5.
     
-
+  if (horizontalIndex == 6)
+  {
+        //Get the actual data from today from the database manager
+        return [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: exerciseNum];
   }
+      return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
+  //}
 //  
 //  for (int i = (int)data.count; i >= 0; i--) {
 //    

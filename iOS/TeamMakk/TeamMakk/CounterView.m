@@ -8,6 +8,8 @@
 
 #import "CounterView.h"
 
+
+
 @interface CounterView () {
   int _current;
   int _goal;
@@ -17,10 +19,16 @@
   NSTimer *_t;
   NSDate *_start;
   UILabel *_activateLayer;
+  
+  id<CounterViewDelegate> _delegate;
+  
+  UILabel *currentLabel;
+  UILabel *_workoutTypeLabel;
+  UILabel *goalLabel;
 }
-@property (nonatomic, strong) UILabel *exerciseLabel;
-@property (nonatomic, strong) UILabel *countLabel;
-@property (nonatomic, strong) UILabel *goalLabel;
+//@property (nonatomic, strong) UILabel *exerciseLabel;
+//@property (nonatomic, strong) UILabel *countLabel;
+//@property (nonatomic, strong) UILabel *goalLabel;
 @property (nonatomic, strong) NSString *exerciseString;
 @property (nonatomic, strong) NSString *goalString;
 @end
@@ -29,11 +37,13 @@
 @implementation CounterView
 - (id)initWithFrame:(CGRect)frame
            exercise:(NSString *)exercise
+           delegate:(id<CounterViewDelegate>) delegate
 {
   self = [super initWithFrame:frame];
   if (self) {
     self.exerciseString = exercise;
     self.isCounter = YES;
+    _delegate = delegate;
     [self setUpView];
     
     int elapsedSeconds;
@@ -80,9 +90,9 @@
 //  testView.backgroundColor = [UIColor blueColor];
 //
   
-  [self addSubview:_fillView];
+  //[self addSubview:_fillView];
   
-  self.goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+  /*self.goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
   self.goalLabel.text = @"/--";
   self.goalLabel.font = [UIFont systemFontOfSize:70];
   self.goalLabel.textColor = [UIColor whiteColor];
@@ -91,9 +101,9 @@
   goalFrame.origin.x = self.frame.size.width - goalFrame.size.width - 20;
   goalFrame.origin.y = self.frame.size.height - goalFrame.size.height - 30;
   self.goalLabel.frame = goalFrame;
-  [self addSubview:self.goalLabel];
+  [self addSubview:self.goalLabel];*/
   
-  self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+  /*self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
   self.countLabel.text = @"0";
   self.countLabel.font = [UIFont systemFontOfSize:190];
   self.countLabel.textColor = [UIColor whiteColor];
@@ -102,9 +112,9 @@
   frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 10, self.goalLabel.frame.size.height);
   self.countLabel.frame = frame;
   _originalFrame = frame;
-  [self addSubview:self.countLabel];
+  [self addSubview:self.countLabel];*/
   
-  self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
+  /*self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
   self.exerciseLabel.text = self.exerciseString;
   self.exerciseLabel.font = [UIFont systemFontOfSize:40];
   self.exerciseLabel.textColor = [UIColor whiteColor];
@@ -112,11 +122,11 @@
   CGRect exerciseFrame = self.exerciseLabel.frame;
   exerciseFrame.origin.x = (self.frame.size.width - self.exerciseLabel.frame.size.width)/2;
   exerciseFrame.origin.y = self.countLabel.frame.origin.y - self.exerciseLabel.frame.size.height;
-  self.exerciseLabel.frame = exerciseFrame;
-  self.backgroundColor = [UIColor redColor];
+  self.exerciseLabel.frame = exerciseFrame;*/
+ // self.backgroundColor = [UIColor redColor];
 //  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
-  self.layer.cornerRadius = 32.0f;
-  [self addSubview:self.exerciseLabel];
+  //self.layer.cornerRadius = 32.0f;
+  //[self addSubview:self.exerciseLabel];
 
   _activateLayer = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 2 - 20, self.frame.size.width, 30)];
   _activateLayer.text = @"Activate";
@@ -126,13 +136,71 @@
   activateFrame.origin.x = (self.frame.size.width - _activateLayer.frame.size.width)/2;
   //activateFrame.origin.y =  _activateLayer.frame.size.height ;
   _activateLayer.frame = activateFrame;
-  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
-  self.layer.cornerRadius = 32.0f;
-  [self addSubview:_activateLayer];
   
-  self.countLabel.alpha = 0.0;
+  UIView * firstCircle = [[UIView alloc] initWithFrame:CGRectMake(10, 185, 250, 250 )];
+  firstCircle.backgroundColor = [UIColor greenColor];
+  firstCircle.layer.cornerRadius = 125;
+  firstCircle.layer.borderWidth = 1.0;
+  [self addSubview:firstCircle];
+  
+  UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActivatePressed)];
+  [firstCircle addGestureRecognizer:tap];
+  
+  _workoutTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, 400, 400)];
+  _workoutTypeLabel.font = [UIFont systemFontOfSize:60];
+  _workoutTypeLabel.text = @"";
+  [_workoutTypeLabel sizeToFit];
+  CGRect workoutFrame = _workoutTypeLabel.frame;
+  workoutFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - workoutFrame.size.width) / 2;
+  _workoutTypeLabel.frame = workoutFrame;
+  
+  [self addSubview:_workoutTypeLabel];
+  
+  currentLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 170, 100, 100)];
+    currentLabel.font = [UIFont systemFontOfSize:60];
+  currentLabel.text = @"Activate";
+  [currentLabel sizeToFit];
+  CGRect currFrame = currentLabel.frame;
+  currFrame.origin.x = (250 - currFrame.size.width ) / 2 + 10;
+  currFrame.origin.y = (250 - currFrame.size.height) / 2 + 185;
+  currentLabel.frame = currFrame;
+  [self addSubview:currentLabel];
+  
+  UILabel *slash = [[UILabel alloc] initWithFrame:CGRectMake(225, 270, 100, 100)];
+  slash.text = @"/";
+  slash.font = [UIFont systemFontOfSize:100];
+  //[self addSubview:slash];
+  
+  UIView * secondCircle = [[UIView alloc] initWithFrame:CGRectMake(240, 400, 120, 120 )];
+  secondCircle.backgroundColor = [UIColor greenColor];
+  secondCircle.layer.cornerRadius = 60;
+  secondCircle.layer.borderWidth = 1.0;
+  [self addSubview:secondCircle];
+  
+  goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(270, 310, 100, 100)];
+  goalLabel.text = @"Goal";
+  goalLabel.font = [UIFont systemFontOfSize:30];
+  [goalLabel sizeToFit];
+  CGRect goalFrameTwo = goalLabel.frame;
+  goalFrameTwo.origin.x = (120 - goalFrameTwo.size.width ) / 2 + 240;
+  goalFrameTwo.origin.y = (120 - goalFrameTwo.size.height) / 2 + 400;
+  goalLabel.frame = goalFrameTwo;
+  [self addSubview:goalLabel];
+  
+  //self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.5];
+  //self.layer.cornerRadius = self.frame.size.width / 2;
+  //self.layer.borderWidth = 1.0;
+  //[self addSubview:_activateLayer];
+  
+  /*self.countLabel.alpha = 0.0;
   self.exerciseLabel.alpha = 0.0;
-  self.goalLabel.alpha = 0.0;
+  self.goalLabel.alpha = 0.0;*/
+}
+
+-(void)ActivatePressed
+{
+  [_delegate buttonPressedMessage:nil];
+  [self userHasStarted];
 }
 
 -(int) getElapsedTime
@@ -147,22 +215,74 @@
   _t = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseTime) userInfo:nil repeats:YES];
 }
 
+-(void) resetLabels
+{
+  currentLabel.font =[UIFont systemFontOfSize:110];
+//  goalLabel.font =
+}
+
 -(void) userHasStarted
 {
-  self.countLabel.alpha = 1.0;
+  /*self.countLabel.alpha = 1.0;
   self.exerciseLabel.alpha = 1.0;
   self.goalLabel.alpha = 1.0;
   _activateLayer.alpha = 0.0;
-  self.backgroundColor = [UIColor redColor];
+  self.backgroundColor = [UIColor redColor];*/
+  
+  currentLabel.text = @"0";
+  currentLabel.font = [UIFont systemFontOfSize:210];
+  _workoutTypeLabel.text = @"";
+  goalLabel.text = @"--";
+  
+  [self centerLabels];
+  //goalLabel;
+}
+
+-(void) centerLabels
+{
+  [currentLabel sizeToFit];
+  CGRect currFrame = currentLabel.frame;
+  currFrame.origin.x = (250 - currFrame.size.width ) / 2 + 10;
+  currFrame.origin.y = (250 - currFrame.size.height) / 2 + 185;
+  currentLabel.frame = currFrame;
+  
+  [goalLabel sizeToFit];
+  CGRect goalFrameTwo = goalLabel.frame;
+  goalFrameTwo.origin.x = (120 - goalFrameTwo.size.width ) / 2 + 240;
+  goalFrameTwo.origin.y = (120 - goalFrameTwo.size.height) / 2 + 400;
+  goalLabel.frame = goalFrameTwo;
+  
+  CGRect workoutFrame = _workoutTypeLabel.frame;
+  workoutFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - workoutFrame.size.width) / 2;
+  _workoutTypeLabel.frame = workoutFrame;
 }
 
 -(void) userHasFinished
 {
-  self.countLabel.alpha = 0.0;
+  /*self.countLabel.alpha = 0.0;
   self.exerciseLabel.alpha = 0.0;
   self.goalLabel.alpha = 0.0;
-  _activateLayer.alpha = 1.0;
-  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
+  _activateLayer.alpha = 1.0;*/
+  //self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
+  
+  /*currentLabel.text = @"Activate";
+  _workoutTypeLabel.text = @"";
+  goalLabel.text = @"Goal";
+  
+  [self centerLabels];*/
+  
+  [_t invalidate];
+  _t = nil;
+  
+  [self performSelector:@selector(endCooldownPeriod) withObject:nil afterDelay:5.0];
+}
+
+-(void) endCooldownPeriod
+{
+  currentLabel.text = @"Activate";
+  [self setTitle:@""];
+  
+  [self resetLabels];
 }
 
 - (void)startCounter {
@@ -173,90 +293,116 @@
 - (void)increaseTime {
   _current++;
   NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:_start];
-    self.countLabel.alpha = 0;
+  
+  if (_current > 10)
+  {
+    currentLabel.font = [UIFont systemFontOfSize:80];
+  } else {
+    currentLabel.font = [UIFont systemFontOfSize:120];
+  }
+  
+    //self.countLabel.alpha = 0;
   [UIView animateWithDuration:0.5 animations:^{
-  self.countLabel.font = [UIFont systemFontOfSize:120];
+  //self.countLabel.font = [UIFont systemFontOfSize:120];
     NSDateComponentsFormatter *formatter = [[NSDateComponentsFormatter alloc] init];
     formatter.allowedUnits = NSCalendarUnitMinute |  NSCalendarUnitSecond;
     formatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
     NSString *string = [formatter stringFromTimeInterval:elapsed];
 //    NSLog(@"%@", string);
     
-    self.countLabel.text = [NSString stringWithFormat:@"%@", string];
-    NSLog(@"%@",self.countLabel.text);
-  [self.countLabel sizeToFit];
+    //self.countLabel.text = [NSString stringWithFormat:@"%@", string];
+    
+    currentLabel.text = [NSString stringWithFormat:@"%@", string];;
+    
+    NSLog(@"%@",currentLabel.text);
+ /* [self.countLabel sizeToFit];
     CGRect frame = self.countLabel.frame;
     frame.origin.x = (self.frame.size.width - frame.size.width)/2;
     self.countLabel.frame = frame;
-      self.countLabel.alpha = 1;
+      self.countLabel.alpha = 1;*/
   }];
+  
+  [self centerLabels];
 }
 
 - (void)endTimer {
   [_t invalidate];
   _t = nil;
   
-  [UIView animateWithDuration:0.5 animations:^{
-    self.countLabel.text = @"";
-    [self.countLabel sizeToFit];
+  //[UIView animateWithDuration:5 animations:^{
+    
+    /*[self.countLabel sizeToFit];
     CGRect frame = self.countLabel.frame;
     frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 6, _originalFrame.origin.y);
     self.countLabel.frame = frame;
-    self.countLabel.alpha = 1;
+    self.countLabel.alpha = 1;*/
+  /*} completion:^(BOOL didComplete){
+    currentLabel.text = @"";
   }];
   
   //ElapsedTime = elapsedSeconds
+  [self centerLabels];*/
 }
 
 - (void)increaseCount {
   _current++;
-  self.countLabel.alpha = 0;
+  //self.countLabel.alpha = 0;
   
   [UIView animateWithDuration:0.5 animations:^{
-    self.countLabel.text = [NSString stringWithFormat:@"%d", _current];
+    //self.countLabel.text = [NSString stringWithFormat:@"%d", _current];
+    currentLabel.text =[NSString stringWithFormat:@"%d", _current];
     if (_current < 10) {
-      self.countLabel.font = [UIFont systemFontOfSize:210];
-      [self.countLabel sizeToFit];
-      CGRect frame = self.countLabel.frame;
+      currentLabel.font = [UIFont systemFontOfSize:210];
+      //self.countLabel.font = [UIFont systemFontOfSize:210];
+      //[self.countLabel sizeToFit];
+      /*CGRect frame = self.countLabel.frame;
       frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width - 6, _originalFrame.origin.y);
       self.countLabel.frame = frame;
-      self.countLabel.alpha = 1;
+      self.countLabel.alpha = 1;*/
     } else if (_current < 100) {
-      self.countLabel.font = [UIFont systemFontOfSize:190];
+      currentLabel.font = [UIFont systemFontOfSize:190];
+      /*self.countLabel.font = [UIFont systemFontOfSize:190];
       [self.countLabel sizeToFit];
       CGRect frame = self.countLabel.frame;
       frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width,  _originalFrame.origin.y);
       self.countLabel.frame = frame;
-      self.countLabel.alpha = 1;
+      self.countLabel.alpha = 1;*/
     } else {
-      self.countLabel.font = [UIFont systemFontOfSize:140];
+      currentLabel.font = [UIFont systemFontOfSize:140];
+      /*self.countLabel.font = [UIFont systemFontOfSize:140];
       [self.countLabel sizeToFit];
       CGRect frame = self.countLabel.frame;
       frame.origin = CGPointMake(self.goalLabel.frame.origin.x - frame.size.width + 4, _originalFrame.origin.y);
       self.countLabel.frame = frame;
-      self.countLabel.alpha = 1;
+      self.countLabel.alpha = 1;*/
     }
     [self updateFill];
   }];
+  [self centerLabels];
 }
 
 -(void) setTitle:(NSString *)newTitle
 {
-  self.exerciseLabel.text = newTitle;
+  /*self.exerciseLabel.text = newTitle;
   [self.exerciseLabel sizeToFit];
   CGRect positionFrame = self.exerciseLabel.frame;
   positionFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - positionFrame.size.width)/2;
-  self.exerciseLabel.frame = positionFrame;
+  self.exerciseLabel.frame = positionFrame;*/
+  
+  _workoutTypeLabel.text = newTitle;
+  //goalLabel;
+  [self centerLabels];
 }
 
 -(void) setGoal:(int) newGoal
 {
   if (newGoal == 0)
   {
-    self.goalLabel.text = [NSString stringWithFormat:@"--"];
+    goalLabel.text = [NSString stringWithFormat:@"--"];
   } else {
-    self.goalLabel.text = [NSString stringWithFormat:@"/%i", newGoal];
+    goalLabel.text = [NSString stringWithFormat:@"/%i", newGoal];
   }
+  [self centerLabels];
 }
 
 - (void)updateFill {
@@ -269,7 +415,7 @@
   // set the radius
   
   // set the mask frame, and increase the height by the
-  // corner radius to hide bottom corners
+  // corner radius to hide bottom cornersda
 //  CGRect maskFrame = self.bounds;// CGRectMake(0, frame.origin.y, 100, 100);
 
   // create the mask layer

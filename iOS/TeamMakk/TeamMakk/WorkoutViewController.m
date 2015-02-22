@@ -37,6 +37,14 @@
   [super viewWillAppear:animated];
   
   self.navigationController.navigationBar.topItem.title = @"Workouts";
+  
+  _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
+  
+  if ([_goalArray count] == 0)
+  {
+    [[DatabaseManager getSharedInstance] addDefaultGoals];
+    _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
+  }
 }
 
 - (void)viewDidLoad {
@@ -46,51 +54,51 @@
   self.button.backgroundColor = [UIColor redColor];
   [self.button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];*/
-  _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
   
-  if ([_goalArray count] == 0)
-  {
-    [[DatabaseManager getSharedInstance] addDefaultGoals];
-    _goalArray = [[DatabaseManager getSharedInstance] fetchAllGoals];
-  }
+  UIImageView * pushupGif = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250, 300)];
+  pushupGif.image = [UIImage imageNamed:@"pushups.gif"];
+  //[pushupGif startAnimating];
+  
+  UIScrollView * horizontalScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 350)];
+  [horizontalScroll addSubview:pushupGif];
+  
+  //[self.view addSubview:horizontalScroll];
   
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
   self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  self.button.frame = CGRectMake(250, 100, 100, 30);
+  self.button.frame = CGRectMake(250, 200, 100, 30);
 //  self.button = [[UIButton alloc] initWithFrame:CGRectMake(250, 100, 100, 30)];
   [self.button setTitle:@"Start" forState:UIControlStateNormal];
   //[self.button addTarget:self action:@selector(buttonPressedMessage:) forControlEvents:UIControlEventTouchUpInside];
   
   [self.button sizeToFit];
-  self.button.frame = CGRectMake( (screenWidth - self.button.frame.size.width)/2, 100, 100, 30);
+  self.button.frame = CGRectMake( (screenWidth - self.button.frame.size.width)/2, 200, 100, 30);
   [self.button sizeToFit];
   
   //[self.view addSubview:self.button];
   
     // Do any additional setup after loading the view.
   
-  _workoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 400, 100, 30)];
+  /*_workoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 400, 100, 30)];
   _workoutLabel.text = @"No workout now";
   [_workoutLabel sizeToFit];
   //[self.view addSubview:_workoutLabel];
-  
-  _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 400, 100, 30)];
+  */
+  _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 560, 100, 30)];
+  //_counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 560, 100, 50)];
   _counterLabel.text = @"0";
   //[self.view addSubview:_counterLabel];
-  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*.05, self.view.frame.size.height * .22, self.view.frame.size.width*.9, (self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height) * .55) exercise:@"Activate"];
+  _counterView = [[CounterView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height)) exercise:@"Activate" delegate:self];
+ // _counterView = [[CounterView alloc] initWithFrame:CGRectMake(50, 400, 200, 150) exercise:@"Activate"];
   
-  UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedMessage:)];
+  /*UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedMessage:)];
   //tapRecognizer.delegate = self;
-  [_counterView addGestureRecognizer:tapRecognizer];
+  [_counterView addGestureRecognizer:tapRecognizer];*/
   
   [self.view addSubview:_counterView];
   
   [[BluetoothShieldHelper sharedShieldHelper] setListener:self];
-  
-
-
-  
   
 }
 
@@ -100,9 +108,9 @@
 
 - (void)buttonPressedMessage:(id)sender
 {
-  NSLog(@"Button pressed");
-  [_counterView setTitle:@"Get in position"];
-  [_counterView userHasStarted];
+  //NSLog(@"Button pressed");
+  //[_counterView setTitle:@"Get in position"];
+  //[_counterView userHasStarted];
   [[BluetoothShieldHelper sharedShieldHelper]sendControlMessage: _goalArray];
 }
 
@@ -151,10 +159,12 @@
   
   _workoutLabel.text = @"No workout (END)";
   [_counterView userHasFinished];
-  [_counterView setGoal:0];
-  [_counterView setTitle:@"Get in position"];
+  //[_counterView setGoal:0];
+  //[_counterView setTitle:@""];
   
-  [_counterView endTimer];
+  //[_counterView endTimer];
+  
+  //[_counterView resetLabels];
   
   // Save the workout that we just did
   NSLog(@"Logging the following workout: %i for %i reps", (workoutNumber-1), numWorkout);

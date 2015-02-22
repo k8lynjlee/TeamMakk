@@ -13,4 +13,6 @@
 
 @interface WorkoutViewController : UIViewController <BluetoothListenerDelegate>
 
+- (void)buttonPressedMessage:(id)sender;
+
 @end

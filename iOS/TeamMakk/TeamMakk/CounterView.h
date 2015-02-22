@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CounterViewDelegate
+
+- (void)buttonPressedMessage:(id)sender;
+
+@end
+
 @interface CounterView : UIView
 @property (nonatomic) BOOL isCounter;
 - (id)initWithFrame:(CGRect)frame
-           exercise:(NSString *)exercise;
+           exercise:(NSString *)exercise
+           delegate:(id<CounterViewDelegate>) delegate;
 
 - (void)increaseCount;
 
@@ -28,5 +35,7 @@
 -(void) userHasFinished;
 
 -(int) getElapsedTime;
+
+-(void) resetLabels;
 
 @end
