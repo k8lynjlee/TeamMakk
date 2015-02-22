@@ -58,10 +58,10 @@
   WorkoutViewController *workoutVC = [[WorkoutViewController alloc] init];
   
   // Configure our tabs.
-  NSArray *viewControllers = [[NSArray alloc] initWithObjects:summaryVC, goalsVC, workoutVC, nil];
-  NSArray *tabItemTitles = [[NSArray alloc] initWithObjects:@"Summary", @"Goals", @"Workouts", nil];
+  NSArray *viewControllers = [[NSArray alloc] initWithObjects: workoutVC, goalsVC, summaryVC, nil];
+  NSArray *tabItemTitles = [[NSArray alloc] initWithObjects:@"Workouts", @"Goals", @"Summary", nil];
   
-  NSArray *tabItemImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"diary"],[UIImage imageNamed:@"rank"],[UIImage imageNamed:@"dumbbell"], nil];
+  NSArray *tabItemImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"dumbbell"], [UIImage imageNamed:@"rank"], [UIImage imageNamed:@"diary"],nil];
 
   // Assign a tab bar item to each view controller.
   for (int i = 0; i < viewControllers.count; i++) {
@@ -69,8 +69,7 @@
     UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:tabItemTitles[i] image:tabItemImages[i] selectedImage:tabItemImages[i]];
     viewController.tabBarItem = tabBarItem;
   }
-//  _mainViewController.tabBar.tintColor = [UIColor blueColor];
-//  _mainViewController.tabBar.barTintColor = [UIColor colorWithWhite:0.2 alpha:1.0];
+  _mainViewController.tabBar.tintColor = [UIColor redColor];
   _mainViewController.viewControllers = viewControllers;
 }
 

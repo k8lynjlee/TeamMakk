@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   [_separatorView.layer setMasksToBounds:YES];
   
   CGRect frame = CGRectMake(JBCellPadding, (self.frame.size.height - 120 + JBCellPadding)/2 - CGRectGetMaxY(self.exerciseLabel.frame) + JBCellPadding, self.frame.size.width - JBCellPadding*2, (self.frame.size.height - CGRectGetMaxY(self.exerciseLabel.frame) - JBCellPadding*2));
+  
   JBLineChartView *lineChartView = [[JBLineChartView alloc] initWithFrame:frame];
   lineChartView.dataSource = self;
   lineChartView.delegate = self;
@@ -110,10 +111,10 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   footerView.sectionCount = 7;
   lineChartView.footerView = footerView;
   
-  JBLineChartScaleView *scaleView = [[JBLineChartScaleView alloc] initWithFrame:CGRectMake(lineChartView.frame.origin.x - 10, lineChartView.frame.origin.y, 10, lineChartView.frame.size.height - 29)];
+  JBLineChartScaleView *scaleView = [[JBLineChartScaleView alloc] initWithFrame:CGRectMake(lineChartView.frame.origin.x - 14, lineChartView.frame.origin.y, 14, lineChartView.frame.size.height - 29)];
   scaleView.zeroLabel.text = @"0";
-  scaleView.topLabel.text = [NSString stringWithFormat:@"%i", (int)[lineChartView maximumValue]];
-//  scaleView.backgroundColor = [UIColor whiteColor];
+  [scaleView setMaxValue:[NSNumber numberWithFloat:[lineChartView maximumValue]]];
+//  scaleView.topLabel.text = [NSString stringWithFormat:@"%i", (int)[lineChartView maximumValue]];
 
   [_separatorView addSubview:scaleView];
   
@@ -121,6 +122,10 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   [lineChartView reloadData];
   
   [self addSubview:_separatorView];
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView horizontalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex {
+  return [UIColor blueColor];
 }
 
 - (NSUInteger)numberOfLinesInLineChartView:(JBLineChartView *)lineChartView
@@ -135,7 +140,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-  return rand() % 5; // y-position (y-axis) of point at horizontalIndex (x-axis)
+  return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
 }
 
 - (CGFloat)lineChartView:(JBLineChartView *)lineChartView widthForLineAtLineIndex:(NSUInteger)lineIndex
@@ -145,11 +150,11 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-  return [UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+  return [UIColor redColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
 }
 
 - (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex {
-  return [UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+  return [UIColor redColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
 }
 
 - (JBLineChartViewLineStyle)lineChartView:(JBLineChartView *)lineChartView lineStyleForLineAtLineIndex:(NSUInteger)lineIndex
@@ -161,5 +166,6 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 {
   return YES;
 }
+
 
 @end
