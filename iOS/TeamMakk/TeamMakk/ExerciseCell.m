@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 @interface ExerciseCell () {
   UIView *_separatorView;
+  int exerciseNum;
 }
 
 @end
@@ -48,10 +49,12 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
-           exercise:(NSString *)exercise {
+           exercise:(NSString *)exercise
+           exerciseNum:(int) exerciseN {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.exerciseString = exercise;
+    exerciseNum =exerciseN;
 //    [self layoutCellComponents];
   }
   return self;
@@ -63,16 +66,18 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   self.exerciseLabel = [[UILabel alloc] initWithFrame:CGRectMake(JBCellPadding, 16, self.frame.size.width, JBCellPadding)];
   self.exerciseLabel.text = self.exerciseString;
   self.exerciseLabel.font = [UIFont systemFontOfSize:16];
+  self.exerciseLabel.textColor = [UIColor whiteColor];
   [self.exerciseLabel sizeToFit];
 
   [_separatorView addSubview:self.exerciseLabel];
 
-//  CAGradientLayer *gradient = [CAGradientLayer layer];
-//  gradient.frame = _separatorView.bounds;
-//  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:.31 green:.49 blue:.74 alpha:.5] CGColor], (id)[[UIColor colorWithRed:.64 green:.74 blue:.98 alpha:.8] CGColor], nil];
-//  [_separatorView.layer insertSublayer:gradient atIndex:0];
+  CAGradientLayer *gradient = [CAGradientLayer layer];
+  gradient.frame = _separatorView.bounds;
+  gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:1.0 green:.38 blue:.08 alpha:.5] CGColor], (id)[[UIColor colorWithRed:1.0 green:.07 blue:.03 alpha:.8] CGColor], nil];
+  [_separatorView.layer insertSublayer:gradient atIndex:0];
   //A9E8E6
-  _separatorView.backgroundColor = [UIColor colorWithRed:(169/255.0) green:(232/255.0) blue:(230/255.0) alpha:.8];
+ // _separatorView.backgroundColor = [UIColor colorWithRed:(169/255.0) green:(232/255.0) blue:(230/255.0) alpha:.8];
+//   _separatorView.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(20/255.0) blue:(20/255.0) alpha:.8];
   [_separatorView.layer setCornerRadius:8.0f];
   [_separatorView.layer setMasksToBounds:YES];
   
@@ -107,8 +112,8 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   NSInteger today = [components day]; // day
   
   footerView.rightLabel.text = [NSNumber numberWithInteger:today].stringValue;
-  footerView.rightLabel.textColor = [UIColor blackColor];
-  footerView.footerSeparatorColor = [UIColor blackColor];
+  footerView.rightLabel.textColor = [UIColor whiteColor];
+  footerView.footerSeparatorColor = [UIColor whiteColor];
   footerView.sectionCount = 7;
   lineChartView.footerView = footerView;
   
@@ -126,7 +131,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 }
 
 - (UIColor *)lineChartView:(JBLineChartView *)lineChartView horizontalSelectionColorForLineAtLineIndex:(NSUInteger)lineIndex {
-  return [UIColor blueColor];
+  return [UIColor whiteColor];
 }
 
 - (NSUInteger)numberOfLinesInLineChartView:(JBLineChartView *)lineChartView
@@ -144,7 +149,7 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
   if (horizontalIndex == 6)
   {
     //Get the actual data from today from the database manager
-    [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: 0];
+    return [[DatabaseManager getSharedInstance] getCurrentActivityWithWorkoutIndex: exerciseNum];
   }
   return rand() % 22; // y-position (y-axis) of point at horizontalIndex (x-axis)
 }
@@ -156,11 +161,11 @@ typedef NS_ENUM(NSInteger, JBLineChartLine){
 
 - (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-  return [UIColor redColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+  return [UIColor whiteColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
 }
 
 - (UIColor *)lineChartView:(JBLineChartView *)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex {
-  return [UIColor redColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
+  return [UIColor whiteColor];//[UIColor colorWithRed:71/255.0 green:62/255.0 blue:63/255.0 alpha:1];
 }
 
 - (JBLineChartViewLineStyle)lineChartView:(JBLineChartView *)lineChartView lineStyleForLineAtLineIndex:(NSUInteger)lineIndex

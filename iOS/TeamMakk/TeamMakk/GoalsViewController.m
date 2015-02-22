@@ -85,12 +85,12 @@
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
   _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Right Plank",  @"Left Plank", @"Situps"]];
-  _mainSwitcher.frame = CGRectMake(0, 80, 100, 100);
+  _mainSwitcher.frame = CGRectMake(0, 70, 100, 100);
   _mainSwitcher.selectedSegmentIndex = 0;
   _mainSwitcher.tintColor = [UIColor redColor];
   [_mainSwitcher sizeToFit];
   
-  _mainSwitcher.frame = CGRectMake((screenWidth - _mainSwitcher.frame.size.width)/2, 100, 100, 100);
+  _mainSwitcher.frame = CGRectMake((screenWidth - _mainSwitcher.frame.size.width)/2, 90, 100, 100);
   [_mainSwitcher sizeToFit];
 
   [_mainSwitcher addTarget:self
@@ -98,6 +98,15 @@
              forControlEvents:UIControlEventValueChanged];
   
   [self.view addSubview:_mainSwitcher];
+  
+  UILabel * goalCompletionLabelForKBitch = [[UILabel alloc] initWithFrame:CGRectMake(0, 140, 250, 250)];
+  goalCompletionLabelForKBitch.text = @"Goal Completion";
+  [goalCompletionLabelForKBitch sizeToFit];
+  goalCompletionLabelForKBitch.textColor = [UIColor lightGrayColor];
+  CGRect goalCompleteFrame = goalCompletionLabelForKBitch.frame;
+  goalCompleteFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - goalCompleteFrame.size.width)/2;
+  goalCompletionLabelForKBitch.frame = goalCompleteFrame;
+  [self.view addSubview:goalCompletionLabelForKBitch];
   
   _progressRing = [[M13ProgressViewRing alloc] initWithFrame:CGRectMake(60, 180, 250, 250)];
   _progressRing.showPercentage = YES;

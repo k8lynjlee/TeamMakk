@@ -35,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSummaryTableViewCell];
-    _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Crunches", @"Side planks", nil];
+    _exercises = [[NSArray alloc] initWithObjects:@"Push ups", @"Right Plank", @"Left Planks", @"Situps", nil];
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
   headerView.backgroundColor = [UIColor clearColor];
   //self.tableView.tableHeaderView = headerView;
@@ -249,11 +249,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row]];
+   ExerciseCell *cell = [[ExerciseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSummaryTableViewCell exercise:[_exercises objectAtIndex:indexPath.row] exerciseNum:indexPath.row];
   CGRect frame = CGRectMake(5, 5, self.tableView.frame.size.width - 10, (self.tableView.frame.size.height)/3.0 - 5);
   cell.frame = frame;
   cell.selectionStyle = UITableViewCellSelectionStyleNone;

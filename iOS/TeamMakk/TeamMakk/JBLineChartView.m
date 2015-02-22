@@ -193,12 +193,12 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 {
 	if (self == [JBLineChartView class])
 	{
-		kJBLineChartViewDefaultLineColor = [UIColor blackColor];
+		kJBLineChartViewDefaultLineColor = [UIColor whiteColor];
         kJBLineChartViewDefaultLineFillColor = [UIColor clearColor];
-        kJBLineChartViewDefaultLineSelectionColor = [UIColor blackColor];
+        kJBLineChartViewDefaultLineSelectionColor = [UIColor whiteColor];
         kJBLineChartViewDefaultLineSelectionFillColor = [UIColor clearColor];
-        kJBLineChartViewDefaultDotColor = [UIColor blackColor];
-        kJBLineChartViewDefaultDotSelectionColor = [UIColor blackColor];
+        kJBLineChartViewDefaultDotColor = [UIColor whiteColor];
+        kJBLineChartViewDefaultDotSelectionColor = [UIColor whiteColor];
 	}
 }
 

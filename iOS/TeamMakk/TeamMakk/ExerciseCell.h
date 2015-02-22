@@ -15,6 +15,8 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
-           exercise:(NSString *)exercise;
+           exercise:(NSString *)exercise
+           exerciseNum:(int) exerciseN;
+
 - (void)layoutCellComponents;
 @end

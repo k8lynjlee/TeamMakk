@@ -74,7 +74,7 @@ static UIColor *kJBLineChartFooterViewDefaultSeparatorColor = nil;
     label.adjustsFontSizeToFitWidth = YES;
     label.font = [UIFont systemFontOfSize:10];
     label.textAlignment = NSTextAlignmentLeft;
-    label.textColor = [UIColor grayColor];
+    label.textColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor clearColor];
     label.text = string;
     [self.labels addObject:label];
