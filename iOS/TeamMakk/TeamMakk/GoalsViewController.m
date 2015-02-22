@@ -86,7 +86,7 @@
   
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
-  _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push ups", @"Right Plank",  @"Left Plank", @"Situps"]];
+  _mainSwitcher = [[UISegmentedControl alloc] initWithItems:@[@"Push Ups", @"Right Plank",  @"Left Plank", @"Situps"]];
   _mainSwitcher.frame = CGRectMake(0, 70, 100, 100);
   _mainSwitcher.selectedSegmentIndex = 0;
   _mainSwitcher.tintColor = [UIColor redColor];
