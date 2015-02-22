@@ -152,16 +152,16 @@ static NSString* kGoalsDatabaseName = @"Goals";
 {
   
   switch (exerciseNum) {
-    case 1: {
+    case 0: {
       [self savePushupTime:numReps];
       break;
-    } case 2:{
+    } case 1:{
       [self saveleftPlankTime:numReps];
       break;
-    } case 3: {
+    } case 2: {
       [self saveRightPlankTime:numReps];
       break;
-    } case 4: {
+    } case 3: {
       [self saveCrunchesTime:numReps];
       break;
     }

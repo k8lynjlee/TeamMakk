@@ -233,7 +233,7 @@
 
 -(void) resetLabels
 {
-  currentLabel.font =[UIFont systemFontOfSize:110];
+  //currentLabel.font =[UIFont systemFontOfSize:110];
 //  goalLabel.font =
 }
 
@@ -295,7 +295,15 @@
 
 -(void) endCooldownPeriod
 {
+  _current = 0;
+  
   currentLabel.text = @"Activate";
+  currentLabel.font = [UIFont systemFontOfSize:60];
+  
+  goalLabel.text = @"Goal";
+  
+  [currentLabel sizeToFit];
+
   [self setTitle:@""];
   
   [self resetLabels];
@@ -406,6 +414,7 @@
   self.exerciseLabel.frame = positionFrame;*/
   
   _workoutTypeLabel.text = newTitle;
+  [_workoutTypeLabel sizeToFit];
   //goalLabel;
   [self centerLabels];
 }
