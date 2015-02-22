@@ -14,6 +14,7 @@
   CGRect _originalFrame;
   CALayer *_fillLayer;
   UIView *_fillView;
+  UILabel *_activateLayer;
 }
 @property (nonatomic, strong) UILabel *exerciseLabel;
 @property (nonatomic, strong) UILabel *countLabel;
@@ -108,7 +109,39 @@
   self.layer.cornerRadius = 32.0f;
   [self addSubview:self.exerciseLabel];
   
+  _activateLayer = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 2 - 20, self.frame.size.width, 30)];
+  _activateLayer.text = @"Activate";
+  _activateLayer.font = [UIFont systemFontOfSize:40];
+  [_activateLayer sizeToFit];
+  CGRect activateFrame = _activateLayer.frame;
+  activateFrame.origin.x = (self.frame.size.width - _activateLayer.frame.size.width)/2;
+  //activateFrame.origin.y =  _activateLayer.frame.size.height ;
+  _activateLayer.frame = activateFrame;
+  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
+  self.layer.cornerRadius = 32.0f;
+  [self addSubview:_activateLayer];
+  
+  self.countLabel.alpha = 0.0;
+  self.exerciseLabel.alpha = 0.0;
+  self.goalLabel.alpha = 0.0;
+}
 
+-(void) userHasStarted
+{
+  self.countLabel.alpha = 1.0;
+  self.exerciseLabel.alpha = 1.0;
+  self.goalLabel.alpha = 1.0;
+  _activateLayer.alpha = 0.0;
+  self.backgroundColor = [UIColor redColor];
+}
+
+-(void) userHasFinished
+{
+  self.countLabel.alpha = 0.0;
+  self.exerciseLabel.alpha = 0.0;
+  self.goalLabel.alpha = 0.0;
+  _activateLayer.alpha = 1.0;
+  self.backgroundColor = [UIColor colorWithRed:.6 green:.9 blue:0 alpha:.9];
 }
 
 - (void)increaseCount
@@ -148,6 +181,10 @@
 -(void) setTitle:(NSString *)newTitle
 {
   self.exerciseLabel.text = newTitle;
+  [self.exerciseLabel sizeToFit];
+  CGRect positionFrame = self.exerciseLabel.frame;
+  positionFrame.origin.x = ([UIScreen mainScreen].bounds.size.width - positionFrame.size.width)/2;
+  self.exerciseLabel.frame = positionFrame;
 }
 
 -(void) setGoal:(int) newGoal

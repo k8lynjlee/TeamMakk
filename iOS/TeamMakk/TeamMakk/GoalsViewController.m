@@ -183,6 +183,10 @@
   _dailyGoalNum.text = [NSString stringWithFormat:@"%i", firstGoal + (int)_goalStepper.value ];
   
   [_progressRing setProgress:((double)numCurrentValues / [_dailyGoalNum.text intValue]) animated:YES];
+  
+  [[DatabaseManager getSharedInstance] updateGoals:_mainSwitcher.selectedSegmentIndex withNewGoal: [_dailyGoalNum.text intValue]];
+  
+  [((WorkoutGoalObject *)_goals[_mainSwitcher.selectedSegmentIndex]) setNumber:[_dailyGoalNum.text intValue]];
 }
 
 -(void)enableKeyboard {

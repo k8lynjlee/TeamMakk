@@ -18,4 +18,8 @@
 
 -(void) setGoal:(int) newGoal;
 
+-(void) userHasStarted;
+
+-(void) userHasFinished;
+
 @end
